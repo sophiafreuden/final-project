@@ -1,0 +1,23 @@
+---
+title: "About - Draft"
+author: "Sophia Freuden"
+date: "11/13/2019"
+output: html_document
+---
+
+## Portland is the place where young people go to retire  
+#### Population growth, crime, infrastructure spending, and climate: a story of development and growing pains in Portland, Oregon  
+
+### About  
+
+I am interested in examing the relationship between population growth, crime rates, infrastructure spending, and average monthly temperature in Portland, Oregon. The city has undergone some of the most rapid changes of any U.S. city in recent years and has quickly become a favored destination for young people seeking a trendy experience. These changes do not come without a price, however. I hope to better understand how changes in population, temperature, and infrastructure impact crime rates in Portland, specificallt by stratifying the crime into petty crime, violent crime, and financial ("white collar") crime. Because Portland has experienced strange and extreme weather phenomena in recents years due to climate change, I am curious to see what--if any--relationship temperature has in this pattern of change.
+
+If I can locate it, I would also like to explore data that tracks gentrification (the displacement of low income households from neighborhoods), income, unemployment, homelesses, and general housing prices in Portland from the last few years.
+
+#### My Data  
+
+I am using crime data from the Portland Police Bureau, infrastructure spending data from the City of Portland, weather data from the Weather Underground, and population data from the U.S. Census and Portland State University.
+
+#### About me  
+
+I am a first-year graduate student in Harvard University's master's program for Regional Studies: Russia, Eastern Europe, and Central Asia. Prior to starting my graduate studies, I worked in criminal defense in Portland, Oregon and haven taken an interest in how rapidly the city has changed in recent years--and what that means for residents.
