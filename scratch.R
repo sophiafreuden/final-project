@@ -1,3 +1,6 @@
+library(tidyverse)
+library(readxl)
+
 x <- read_csv(file = "raw-data/CrimeData-2018.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
@@ -32,3 +35,8 @@ monthspread <- x %>% group_by(OccurMonth) %>% count()
 
 ggplot(monthspread, aes(x = OccurMonth, y = n)) + geom_line()
 
+y <- read_xlsx(path = "raw-data/BLS PDX Unemployment.xlsx")
+
+y$Avg <- rowMeans(y[,2:13], na.rm=TRUE)
+
+y <- y %>% mutate(Avg = round(Avg, digits = 1))
