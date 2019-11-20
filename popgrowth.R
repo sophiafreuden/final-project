@@ -1,4 +1,5 @@
 
+library(fs)
 library(tidyverse)
 
 pop <- read_csv("raw-data/2010-2018 census pop estimates.csv", col_types = cols(
