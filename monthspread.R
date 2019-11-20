@@ -35,8 +35,10 @@ monthspread15 <- months15 %>%
 plotmonths15 <- ggplot(monthspread15, aes(x = OccurMonth, y = n)) +
   geom_line() +
   theme_minimal() +
-  labs(title = "Number of Total Crimes Over Months in 2015",
-       subtitle = "Significantly lower numbers in early months") +
+  labs(
+    title = "Number of Total Crimes Over Months in 2015",
+    subtitle = "Significantly lower numbers in early months"
+  ) +
   xlab("Month") +
   ylab("Number of Crimes Reported") +
   geom_smooth(method = "lm", se = FALSE) +
@@ -69,15 +71,17 @@ months16 <- months16 %>%
 
 monthspread16 <- months16 %>%
   filter(OccurYear == 2016) %>%
-group_by(OccurMonth) %>%
+  group_by(OccurMonth) %>%
   count()
 
 plotmonths16 <- ggplot(monthspread16, aes(x = OccurMonth, y = n)) +
   geom_line() +
   theme_minimal() +
-  labs(title = "Number of Total Crimes Over Months in 2016",
-       subtitle = "General increase over time with significant dropoff in December",
-       caption = "2016 graph scaled on y axis to show dynamism.") +
+  labs(
+    title = "Number of Total Crimes Over Months in 2016",
+    subtitle = "General increase over time with significant dropoff in December",
+    caption = "2016 graph scaled on y axis to show dynamism."
+  ) +
   xlab("Month") +
   ylab("Number of Crimes Reported") +
   geom_smooth(method = "lm", se = FALSE)
@@ -115,9 +119,11 @@ monthspread17 <- months17 %>%
 plotmonths17 <- ggplot(monthspread17, aes(x = OccurMonth, y = n)) +
   geom_line() +
   theme_minimal() +
-  labs(title = "Number of Total Crimes Over Months in 2017",
-       subtitle = "January and December show lulls in reported crime.",
-       caption = "2017 graph scaled on y axis to show dynamism.") +
+  labs(
+    title = "Number of Total Crimes Over Months in 2017",
+    subtitle = "January and December show lulls in reported crime.",
+    caption = "2017 graph scaled on y axis to show dynamism."
+  ) +
   xlab("Month") +
   ylab("Number of Crimes Reported") +
   geom_smooth(method = "lm", se = FALSE)
@@ -155,9 +161,11 @@ monthspread18 <- months18 %>%
 plotmonths18 <- ggplot(monthspread18, aes(x = OccurMonth, y = n)) +
   geom_line() +
   theme_minimal() +
-  labs(title = "Number of Total Crimes Over Months in 2018",
-       subtitle = "Feburary and December show lulls in reported crime.",
-       caption = "2018 graph scaled on y axis to show dynamism.") +
+  labs(
+    title = "Number of Total Crimes Over Months in 2018",
+    subtitle = "Feburary and December show lulls in reported crime.",
+    caption = "2018 graph scaled on y axis to show dynamism."
+  ) +
   xlab("Month") +
   ylab("Number of Crimes Reported") +
   geom_smooth(method = "lm", se = FALSE)
@@ -195,11 +203,13 @@ monthspread19 <- months19 %>%
 plotmonths19 <- ggplot(monthspread19, aes(x = OccurMonth, y = n)) +
   geom_line() +
   theme_minimal() +
-  labs(title = "Number of Total Crimes Over Months in Jan. through Sept. 2019",
-       subtitle = "Feburary and September show lulls in reported crime.",
-       caption = "2019 graph scaled on y axis to show dynamism.
+  labs(
+    title = "Number of Total Crimes Over Months in Jan. through Sept. 2019",
+    subtitle = "Feburary and September show lulls in reported crime.",
+    caption = "2019 graph scaled on y axis to show dynamism.
        This data is pulled from a file that includes only year-to-date data for 2019.
-       September lull may be attributed to year-to-date nature of data.") +
+       September lull may be attributed to year-to-date nature of data."
+  ) +
   xlab("Month") +
   ylab("Number of Crimes Reported") +
   geom_smooth(method = "lm", se = FALSE)
