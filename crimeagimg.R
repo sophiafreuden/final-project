@@ -25,7 +25,8 @@ plot15 <- ggplot(a, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
   labs(title = "Distribution of Crimes per Victim Type in 2015") +
   xlab("Type of Victim") +
   ylab("Count") +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  theme_minimal()
 
 ggsave(filename = "crimeag15.png", plot = plot15, device = png())
 
@@ -57,7 +58,8 @@ plot16 <- ggplot(b, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
   labs(title = "Distribution of Crimes per Victim Type in 2016") +
   xlab("Type of Victim") +
   ylab("Count") +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  theme_minimal()
 
 ggsave(filename = "crimeag16.png", plot = plot16, device = png())
 
@@ -89,7 +91,8 @@ plot17 <- ggplot(c, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
   labs(title = "Distribution of Crimes per Victim Type in 2017") +
   xlab("Type of Victim") +
   ylab("Count") +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  theme_minimal()
 
 ggsave(filename = "crimeag17.png", plot = plot17, device = png())
 
@@ -121,7 +124,8 @@ plot18 <- ggplot(d, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
   labs(title = "Distribution of Crimes per Victim Type in 2018") +
   xlab("Type of Victim") +
   ylab("Count") +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  theme_minimal()
 
 ggsave(filename = "crimeag18.png", plot = plot18, device = png())
 
@@ -156,7 +160,8 @@ plot19 <- ggplot(e, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
   ) +
   xlab("Type of Victim") +
   ylab("Count") +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  theme_minimal()
 
 ggsave(filename = "crimeag19.png", plot = plot19, device = png())
 

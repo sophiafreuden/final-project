@@ -72,6 +72,14 @@ ui <- fluidPage(
           imageOutput(outputId = "plotmonths17"),
           imageOutput(outputId = "plotmonths18"),
           imageOutput(outputId = "plotmonths19")
+        ),
+        tabPanel(
+          "Population",
+          h3("Population Growth Over Time and Predictions for 2019 through 2023"),
+          imageOutput(outputId = "popplot"),
+          imageOutput(outputId = "popplot2"),
+          imageOutput(outputId = "poppredplot"),
+          imageOutput(outputId = "poppredplot2")
         )
       )
     )
@@ -168,6 +176,30 @@ server <- function(input, output) {
   output$plotmonths19 <- renderImage({
     list(
       src = "plotmonths19.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
+  output$popplot <- renderImage({
+    list(
+      src = "popplot.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
+  output$popplot2 <- renderImage({
+    list(
+      src = "popplot2.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
+  output$poppredplot <- renderImage({
+    list(
+      src = "poppredplot.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
+  output$poppredplot2 <- renderImage({
+    list(
+      src = "poppredplot2.png",
       contentType = "image/gif"
     )
   }, deleteFile = FALSE)

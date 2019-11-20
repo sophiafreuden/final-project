@@ -70,6 +70,3 @@ file_copy(
   new_path = "finalproject/proppredplot.png",
   overwrite = TRUE
 )
-
-
-
