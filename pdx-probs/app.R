@@ -55,10 +55,18 @@ ui <- fluidPage(
             img(src = "crimeag15.png", style = "display: block; margin-left: auto; margin-right: auto;"),
             br(),
             br(),
-            img(src = "crimeag16.png", style = "display: block; margin-left: auto; margin-right: auto;") # ,
-            # imageOutput(outputId = "crimeag17"),
-            # imageOutput(outputId = "crimeag18"),
-            # imageOutput(outputId = "crimeag19")
+            img(src = "crimeag16.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+            br(),
+            br(),
+            img(src = "crimeag17.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+            br(),
+            br(),
+            img(src = "crimeag18.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+            br(),
+            br(),
+            img(src = "crimeag19.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+            br(),
+            br()
           )
         ),
         tabPanel(

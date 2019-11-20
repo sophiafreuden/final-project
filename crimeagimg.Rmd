@@ -48,7 +48,7 @@ a <- read_csv(file = "cleaned-data/CrimeData-2015.csv", col_types = cols(
 # recommendation Bernadette gave me.
 
 crimeag15 <- ggplot(a, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
-  geom_bar() +
+  geom_bar(show.legend = FALSE) +
   labs(title = "Distribution of Crimes per Victim Type in 2015") +
   xlab("Type of Victim") +
   ylab("Count") +
@@ -99,7 +99,7 @@ b <- read_csv(file = "cleaned-data/CrimeData-2016.csv", col_types = cols(
 # everything was rendering properly.
 
 crimeag16 <- ggplot(b, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
-  geom_bar() +
+  geom_bar(show.legend = FALSE) +
   labs(title = "Distribution of Crimes per Victim Type in 2016") +
   xlab("Type of Victim") +
   ylab("Count") +
@@ -142,7 +142,7 @@ c <- read_csv(file = "cleaned-data/CrimeData-2017.csv", col_types = cols(
 ))
 
 crimeag17 <- ggplot(c, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
-  geom_bar() +
+  geom_bar(show.legend = FALSE) +
   labs(title = "Distribution of Crimes per Victim Type in 2017") +
   xlab("Type of Victim") +
   ylab("Count") +
@@ -183,7 +183,7 @@ d <- read_csv(file = "cleaned-data/CrimeData-2018.csv", col_types = cols(
 ))
 
 crimeag18 <- ggplot(d, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
-  geom_bar() +
+  geom_bar(show.legend = FALSE) +
   labs(title = "Distribution of Crimes per Victim Type in 2018") +
   xlab("Type of Victim") +
   ylab("Count") +
@@ -222,8 +222,11 @@ e <- read_csv(file = "cleaned-data/CrimeData-2019.csv", col_types = cols(
   OffenseCount = col_double()
 ))
 
+# I had to come back and hide all the legends in all the bar
+# charts in the Rmd.
+
 crimeag19 <- ggplot(e, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
-  geom_bar() +
+  geom_bar(show.legend = FALSE) +
   labs(
     title = "Distribution of Crimes per Victim Type in 2019",
     subtitle = "Year to Date (January through September)"
