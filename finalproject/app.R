@@ -63,6 +63,15 @@ ui <- fluidPage(
           imageOutput(outputId = "persplot"),
           imageOutput(outputId = "propplot"),
           imageOutput(outputId = "proppredplot")
+        ),
+        tabPanel(
+          "Crimes Per Month",
+          h3("Number of Reported Crimes Per Month from 2015 to 2019"),
+          imageOutput(outputId = "plotmonths15"),
+          imageOutput(outputId = "plotmonths16"),
+          imageOutput(outputId = "plotmonths17"),
+          imageOutput(outputId = "plotmonths18"),
+          imageOutput(outputId = "plotmonths19")
         )
       )
     )
@@ -75,7 +84,7 @@ server <- function(input, output) {
   output$victimbar <- renderPlot({
     crime18 %>%
       filter(CrimeAgainst == input$victim) %>%
-      ggplot(aes(x = OffenseType)) +
+      ggplot(aes(x = OffenseType, fill = OffenseType)) +
       geom_bar() +
       coord_flip() +
       scale_y_log10() +
@@ -129,6 +138,36 @@ server <- function(input, output) {
   output$proppredplot <- renderImage({
     list(
       src = "proppredplot.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
+  output$plotmonths15 <- renderImage({
+    list(
+      src = "plotmonths15.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
+  output$plotmonths16 <- renderImage({
+    list(
+      src = "plotmonths16.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
+  output$plotmonths17 <- renderImage({
+    list(
+      src = "plotmonths17.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
+  output$plotmonths18 <- renderImage({
+    list(
+      src = "plotmonths18.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
+  output$plotmonths19 <- renderImage({
+    list(
+      src = "plotmonths19.png",
       contentType = "image/gif"
     )
   }, deleteFile = FALSE)
