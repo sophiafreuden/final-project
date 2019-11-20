@@ -14,7 +14,14 @@ library(tidyverse)
 
 ### R Markdown for Crime in 2018 by Victim Type
 
-```{r}
+```{r reading in 2015 crime file}
+# I determined early on what columns would need to be cast for my
+# crime data files for 2015 to 2019. I used the same casting for
+# all five of these files. I had issues with the 2016 file, though,
+# because it was missing a longitude column. I contacted the
+# Portland Police Bureau, however, and they fixed it, which was
+# pretty cool.
+
 a <- read_csv(file = "cleaned-data/CrimeData-2015.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
@@ -33,7 +40,7 @@ a <- read_csv(file = "cleaned-data/CrimeData-2015.csv", col_types = cols(
 ))
 ```
 
-```{r}
+```{r 2015 crime against plot and image}
 # I originally had all of the code in this Rmd in an R script file
 # that I had been using to build my project. Because of issues I
 # was having with my images printing in Shiny properly, I decided
@@ -52,11 +59,13 @@ crimeag15 <- ggplot(a, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
 # said she found the method below online because she was having similar
 # issues with getting her images to load properly. Because this method
 # doesn't employ pipes, having it split into "runnable" code chunks
-# in an Rmd made more sense than 
+# in an Rmd made more sense than leaving it in its origianl R script.
 
 png("crimeag15.png", width = 576, height = 576, res = 120)
 crimeag15
 dev.off()
+
+# Don't forget to load fs for file_copy!
 
 file_copy(
   path = "crimeag15.png",
