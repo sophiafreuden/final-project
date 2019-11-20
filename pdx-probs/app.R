@@ -122,36 +122,6 @@ server <- function(input, output) {
       labs(caption = "test") +
       theme_minimal()
   })
-  output$crimeag15 <- renderImage({
-    list(
-      src = "crimeag15.png",
-      contentType = "image/gif"
-    )
-  }, deleteFile = FALSE)
-  output$crimeag16 <- renderImage({
-    list(
-      src = "crimeag16.png",
-      contentType = "image/gif"
-    )
-  }, deleteFile = FALSE)
-  output$crimeag17 <- renderImage({
-    list(
-      src = "crimeag17.png",
-      contentType = "image/gif"
-    )
-  }, deleteFile = FALSE)
-  output$crimeag18 <- renderImage({
-    list(
-      src = "crimeag18.png",
-      contentType = "image/gif"
-    )
-  }, deleteFile = FALSE)
-  output$crimeag19 <- renderImage({
-    list(
-      src = "crimeag19.png",
-      contentType = "image/gif"
-    )
-  }, deleteFile = FALSE)
   output$persplot <- renderImage({
     list(
       src = "persplot.png",
