@@ -21,6 +21,8 @@ crime18 <- read_csv(file = "raw-data/CrimeData-2018.csv", col_types = cols(
   OffenseCount = col_double()
 ))
 
+unemployment <- read_xlsx(path = "raw-data/BLS PDX Unemployment.xlsx")
+
 ui <- fluidPage(
   navbarPage(
     "Growing Pains in Portland: A Story of Crime, Unemployment, and Population",
@@ -80,11 +82,27 @@ ui <- fluidPage(
           imageOutput(outputId = "popplot2"),
           imageOutput(outputId = "poppredplot"),
           imageOutput(outputId = "poppredplot2")
+        ),
+        tabPanel(
+          "Unemployment",
+          h3("Unemployment and Crime Rate Over Time"),
+          br(),
+          sidebarPanel(
+            selectInput(
+              inputId = "year",
+              "Year:", choices = c(2009:2018)
+            ),
+            h6("?"),
+            h6("?")
+          ),
+          mainPanel(
+            plotOutput(outputId = "monthlyunempline")
+          )
+            )
+          )
         )
       )
     )
-  )
-)
 
 
 
@@ -203,6 +221,43 @@ server <- function(input, output) {
       contentType = "image/gif"
     )
   }, deleteFile = FALSE)
+  output$monthlyunempline <- renderPlot({
+    unemployment %>%
+      gather(`Jan`,
+             `Feb`,
+             `Mar`,
+             `Apr`,
+             `May`,
+             `Jun`,
+             `Jul`,
+             `Aug`,
+             `Sep`,
+             `Oct`,
+             `Nov`,
+             `Dec`,
+             key = "Month",
+             value = "Rate") %>%
+      spread(key = "Year",
+             value = "Rate") %>%
+      mutate(Month = case_when(
+        Month == "Apr" ~ 4,
+        Month == "Aug" ~ 8,
+        Month == "Dec" ~ 12,
+        Month == "Feb" ~ 2,
+        Month == "Jan" ~ 1,
+        Month == "Jul" ~ 7,
+        Month == "Jun" ~ 6,
+        Month == "Mar" ~ 3,
+        Month == "May" ~ 5,
+        Month == "Nov" ~ 11,
+        Month == "Oct" ~ 10,
+        Month == "Sep" ~ 9
+      )) %>%
+      arrange(Month) %>%
+      ggplot(aes(x = Month, y = input$`year`)) +
+      geom_line() +
+      theme_minimal()
+  })
 }
 
 shinyApp(ui = ui, server = server)

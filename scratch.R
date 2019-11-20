@@ -36,12 +36,34 @@ monthspread <- x %>% group_by(OccurMonth) %>% count()
 
 ggplot(monthspread, aes(x = OccurMonth, y = n)) + geom_line()
 
-y <- read_xlsx(path = "raw-data/BLS PDX Unemployment.xlsx")
-
-y$Avg <- rowMeans(y[,2:13], na.rm=TRUE)
-
-y <- y %>% mutate(Avg = round(Avg, digits = 1))
-
 ggplot(x, aes(x = CrimeAgainst)) + geom_bar()
 
 ggsave(filename = "test.png", plot = last_plot(), device = png())
+
+Unemp <- read_xlsx(path = "raw-data/BLS PDX Unemployment.xlsx")
+
+# Unemp$Avg <- rowMeans(y[,2:13], na.rm=TRUE)
+# 
+# Unemp <- Unemp %>% mutate(Avg = round(Avg, digits = 1))
+
+Unemp <- gather(Unemp, `Jan`, `Feb`, `Mar`, `Apr`, `May`, `Jun`, `Jul`, `Aug`, `Sep`, `Oct`, `Nov`, `Dec`, key = "Month", value = "Rate")
+
+Unemp2 <- spread(Unemp, key = "Year", value = "Rate")
+
+Unemp2 <- Unemp2 %>%
+  mutate(Month = case_when(
+    Month == "Apr" ~ 4,
+    Month == "Aug" ~ 8,
+    Month == "Dec" ~ 12,
+    Month == "Feb" ~ 2,
+    Month == "Jan" ~ 1,
+    Month == "Jul" ~ 7,
+    Month == "Jun" ~ 6,
+    Month == "Mar" ~ 3,
+    Month == "May" ~ 5,
+    Month == "Nov" ~ 11,
+    Month == "Oct" ~ 10,
+    Month == "Sep" ~ 9
+  ))
+
+Unemp2 <- Unemp2 %>% arrange(Month)
