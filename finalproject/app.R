@@ -90,7 +90,17 @@ ui <- fluidPage(
           sidebarPanel(
             selectInput(
               inputId = "year",
-              "Year:", choices = c(2009:2018)
+              "Year:", choices = c("r2009",
+                                   "r2010",
+                                   "r2011",
+                                   "r2012",
+                                   "r2013",
+                                   "r2014",
+                                   "r2015",
+                                   "r2016",
+                                   "r2017",
+                                   "r2018",
+                                   "r2019")
             ),
             h6("?"),
             h6("?")
@@ -253,8 +263,29 @@ server <- function(input, output) {
         Month == "Oct" ~ 10,
         Month == "Sep" ~ 9
       )) %>%
-      arrange(Month) %>%
-      ggplot(aes(x = Month, y = input$`year`)) +
+      mutate(r2009 = `2009`) %>%
+      mutate(r2010 = `2010`) %>%
+      mutate(r2011 = `2011`) %>%
+      mutate(r2012 = `2012`) %>%
+      mutate(r2013 = `2013`) %>%
+      mutate(r2014 = `2014`) %>%
+      mutate(r2015 = `2015`) %>%
+      mutate(r2016 = `2016`) %>%
+      mutate(r2017 = `2017`) %>%
+      mutate(r2018 = `2018`) %>%
+      mutate(r2019 = `2019`) %>%
+      select(-`2009`,
+             -`2010`,
+             -`2011`,
+             -`2012`,
+             -`2013`,
+             -`2014`,
+             -`2015`,
+             -`2016`,
+             -`2017`,
+             -`2018`,
+             -`2019`) %>%
+      ggplot(aes(x = Month, y = input$year)) +
       geom_line() +
       theme_minimal()
   })
