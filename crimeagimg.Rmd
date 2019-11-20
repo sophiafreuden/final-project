@@ -72,6 +72,8 @@ file_copy(
   new_path = "pdx-probs/www/crimeag15.png",
   overwrite = TRUE
 )
+
+file_delete(path = "crimeag15.png")
 ```
 
 ```{r 2016 crime against plot and image}
@@ -121,6 +123,8 @@ file_copy(
   new_path = "pdx-probs/www/crimeag16.png",
   overwrite = TRUE
 )
+
+file_delete(path = "crimeag16.png")
 ```
 
 ```{r 2017 crime against plot and image}
@@ -162,6 +166,8 @@ file_copy(
   new_path = "pdx-probs/www/crimeag17.png",
   overwrite = TRUE
 )
+
+file_delete(path = "crimeag17.png")
 ```
 
 ```{r 2018 crime against plot and image}
@@ -190,6 +196,8 @@ crimeag18 <- ggplot(d, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
   theme(legend.position = "none") +
   theme_minimal()
 
+# Lots of copying and pasting!
+
 png("crimeag18.png", width = 576, height = 576, res = 120)
 crimeag18
 dev.off()
@@ -199,6 +207,8 @@ file_copy(
   new_path = "pdx-probs/www/crimeag18.png",
   overwrite = TRUE
 )
+
+file_delete(path = "crimeag18.png")
 ```
 
 ```{r 2018 crime against plot and image}
@@ -251,5 +261,9 @@ file_copy(
   new_path = "pdx-probs/www/crimeag19.png",
   overwrite = TRUE
 )
+
+# Leave no trails. I added this file_delete to all the chunks in this Rmd to get rid of the unnecessary pngs I created in the process of creating these images.
+
+file_delete(path = "crimeag19.png")
 ```
 
