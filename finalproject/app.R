@@ -39,19 +39,29 @@ ui <- fluidPage(
             h6("Crimes against property far outnumber crimes against people or society."),
             h6("Crimes against property are also more diverse in type, though most are varying
                    types of theft.")
+          ),
+          mainPanel(
+            plotOutput(outputId = "victimbar")
           )
-        ,
-        mainPanel(
-          plotOutput(outputId = "victimbar")
-        )),
-        tabPanel("test",
-                 h3("test"),
-                 "Does this work?"
-                 )
+        ),
+        tabPanel(
+          "Victim Distribution",
+          h3("Distribution of Crimes per Victim Type from 2015 to 2019"),
+          br(),
+          verticalLayout(
+          imageOutput(outputId = "crimeag15"),
+          imageOutput(outputId = "crimeag16"))
+        ),
+        tabPanel(
+          "test2",
+          h3("test2"),
+          "Does this work?"
+        )
       )
     )
   )
 )
+
 
 
 server <- function(input, output) {
@@ -61,8 +71,24 @@ server <- function(input, output) {
       ggplot(aes(x = OffenseType)) +
       geom_bar() +
       coord_flip() +
-      scale_y_log10()
+      scale_y_log10() +
+      ylab("Count") +
+      labs(caption = "test") +
+      theme(legend.position = "none") +
+      theme_minimal()
   })
+  output$crimeag15 <- renderImage({
+    list(
+      src = "crimeag15.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
+  output$crimeag16 <- renderImage({
+    list(
+      src = "crimeag16.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
 }
 
 shinyApp(ui = ui, server = server)

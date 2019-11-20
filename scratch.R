@@ -40,3 +40,7 @@ y <- read_xlsx(path = "raw-data/BLS PDX Unemployment.xlsx")
 y$Avg <- rowMeans(y[,2:13], na.rm=TRUE)
 
 y <- y %>% mutate(Avg = round(Avg, digits = 1))
+
+ggplot(x, aes(x = CrimeAgainst)) + geom_bar()
+
+ggsave(filename = "test.png", plot = last_plot(), device = png())
