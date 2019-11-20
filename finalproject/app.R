@@ -8,42 +8,53 @@
 #
 
 library(shiny)
+library(tidyverse)
 
-# Define UI for application that draws a histogram
+crime18 <- read_csv(file = "raw-data/CrimeData-2018.csv", col_types = cols(
+    Address = col_character(),
+    CaseNumber = col_character(),
+    CrimeAgainst = col_character(),
+    Neighborhood = col_character(),
+    OccurDate = col_character(),
+    OccurTime = col_character(),
+    OffenseCategory = col_character(),
+    OffenseType = col_character(),
+    OpenDataLat = col_double(),
+    OpenDataLon = col_double(),
+    OpenDataX = col_character(),
+    OpenDataY = col_character(),
+    ReportDate = col_character(),
+    OffenseCount = col_double()
+))
+
 ui <- fluidPage(
-
-    # Application title
-    titlePanel("Old Faithful Geyser Data"),
-
-    # Sidebar with a slider input for number of bins 
-    sidebarLayout(
-        sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
-        ),
-
-        # Show a plot of the generated distribution
-        mainPanel(
-           plotOutput("distPlot")
+    navbarPage("Growing Pains in Portland: A Story of Crime, Unemployment, and Population",
+        tabPanel("Crime",
+            tabsetPanel(
+                tabPanel("Victims in 2018",
+            h3("Crime in 2018 by Victim Type"),
+            br(),
+            sidebarPanel(
+            selectInput(inputId = "victim",
+                         "Sample size", value = 25),
+            plotOutput(outputId = "hist") 
+        )))),
+        tabPanel(
+            "About",
+            h4("About my project"),
+            "This is something about my project."
         )
     )
 )
 
-# Define server logic required to draw a histogram
+
 server <- function(input, output) {
-
-    output$distPlot <- renderPlot({
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white')
-    })
+    output$img <- renderImage({
+        list(
+            src = "animation.gif",
+            contentType = "image/gif"
+        )
+    }, deleteFile = FALSE)
 }
 
-# Run the application 
 shinyApp(ui = ui, server = server)
