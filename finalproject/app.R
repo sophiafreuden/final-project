@@ -48,9 +48,14 @@ ui <- fluidPage(
           "Victim Distribution",
           h3("Distribution of Crimes per Victim Type from 2015 to 2019"),
           br(),
+          # Vertical layout didn't seem to change anything?
           verticalLayout(
-          imageOutput(outputId = "crimeag15"),
-          imageOutput(outputId = "crimeag16"))
+            imageOutput(outputId = "crimeag15"),
+            imageOutput(outputId = "crimeag16"),
+            imageOutput(outputId = "crimeag17"),
+            imageOutput(outputId = "crimeag18"),
+            imageOutput(outputId = "crimeag19")
+          )
         ),
         tabPanel(
           "test2",
@@ -86,6 +91,24 @@ server <- function(input, output) {
   output$crimeag16 <- renderImage({
     list(
       src = "crimeag16.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
+  output$crimeag17 <- renderImage({
+    list(
+      src = "crimeag17.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
+  output$crimeag18 <- renderImage({
+    list(
+      src = "crimeag18.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
+  output$crimeag19 <- renderImage({
+    list(
+      src = "crimeag19.png",
       contentType = "image/gif"
     )
   }, deleteFile = FALSE)
