@@ -40,11 +40,14 @@ ui <- fluidPage(
             h6("Crimes against property are also more diverse in type, though most are varying
                    types of theft.")
           )
-        ),
+        ,
         mainPanel(
-          plotOutput(outputId = "victimbar"),
-          br()
-        )
+          plotOutput(outputId = "victimbar")
+        )),
+        tabPanel("test",
+                 h3("test"),
+                 "Does this work?"
+                 )
       )
     )
   )
