@@ -74,4 +74,179 @@ file_copy(
 )
 ```
 
+```{r 2016 crime against plot and image}
+b <- read_csv(file = "cleaned-data/CrimeData-2016.csv", col_types = cols(
+  Address = col_character(),
+  CaseNumber = col_character(),
+  CrimeAgainst = col_character(),
+  Neighborhood = col_character(),
+  OccurDate = col_character(),
+  OccurTime = col_character(),
+  OffenseCategory = col_character(),
+  OffenseType = col_character(),
+  OpenDataLat = col_double(),
+  OpenDataLon = col_double(),
+  OpenDataX = col_character(),
+  OpenDataY = col_character(),
+  ReportDate = col_character(),
+  OffenseCount = col_double()
+))
+
+# Because these code chunks involved a lot of copying and pasting,
+# I had to be very careful to change all the necessary parts.
+# I found it helpful to open the image files these code chunks
+# produced outside R (in Previewer, for example) to make sure
+# everything was rendering properly.
+
+crimeag16 <- ggplot(b, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
+  geom_bar() +
+  labs(title = "Distribution of Crimes per Victim Type in 2016") +
+  xlab("Type of Victim") +
+  ylab("Count") +
+  theme(legend.position = "none") +
+  theme_minimal()
+
+png("crimeag16.png", width = 576, height = 576, res = 120)
+crimeag16
+dev.off()
+
+# I had to mess around with the resolution and size of the images
+# being saved to get something that wasn't too big in Shiny, but
+# also of high enough quality. These numbers--576 and 120--are
+# proportional, as 480 is the default for size and 100 is the
+# default for resolution. So 1.2 times 480 is 576.
+
+file_copy(
+  path = "crimeag16.png",
+  new_path = "pdx-probs/www/crimeag16.png",
+  overwrite = TRUE
+)
+```
+
+```{r 2017 crime against plot and image}
+c <- read_csv(file = "cleaned-data/CrimeData-2017.csv", col_types = cols(
+  Address = col_character(),
+  CaseNumber = col_character(),
+  CrimeAgainst = col_character(),
+  Neighborhood = col_character(),
+  OccurDate = col_character(),
+  OccurTime = col_character(),
+  OffenseCategory = col_character(),
+  OffenseType = col_character(),
+  OpenDataLat = col_double(),
+  OpenDataLon = col_double(),
+  OpenDataX = col_character(),
+  OpenDataY = col_character(),
+  ReportDate = col_character(),
+  OffenseCount = col_double()
+))
+
+crimeag17 <- ggplot(c, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
+  geom_bar() +
+  labs(title = "Distribution of Crimes per Victim Type in 2017") +
+  xlab("Type of Victim") +
+  ylab("Count") +
+  theme(legend.position = "none") +
+  theme_minimal()
+
+# It also took a bit of messing around in Shiny to get these
+# images to center properly. That code is in the app, however,
+# and uses something I found online.
+
+png("crimeag17.png", width = 576, height = 576, res = 120)
+crimeag17
+dev.off()
+
+file_copy(
+  path = "crimeag17.png",
+  new_path = "pdx-probs/www/crimeag17.png",
+  overwrite = TRUE
+)
+```
+
+```{r 2018 crime against plot and image}
+d <- read_csv(file = "cleaned-data/CrimeData-2018.csv", col_types = cols(
+  Address = col_character(),
+  CaseNumber = col_character(),
+  CrimeAgainst = col_character(),
+  Neighborhood = col_character(),
+  OccurDate = col_character(),
+  OccurTime = col_character(),
+  OffenseCategory = col_character(),
+  OffenseType = col_character(),
+  OpenDataLat = col_double(),
+  OpenDataLon = col_double(),
+  OpenDataX = col_character(),
+  OpenDataY = col_character(),
+  ReportDate = col_character(),
+  OffenseCount = col_double()
+))
+
+crimeag18 <- ggplot(d, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
+  geom_bar() +
+  labs(title = "Distribution of Crimes per Victim Type in 2018") +
+  xlab("Type of Victim") +
+  ylab("Count") +
+  theme(legend.position = "none") +
+  theme_minimal()
+
+png("crimeag18.png", width = 576, height = 576, res = 120)
+crimeag18
+dev.off()
+
+file_copy(
+  path = "crimeag18.png",
+  new_path = "pdx-probs/www/crimeag18.png",
+  overwrite = TRUE
+)
+```
+
+```{r 2018 crime against plot and image}
+
+# Don't forget your code chunk titles!
+
+e <- read_csv(file = "cleaned-data/CrimeData-2019.csv", col_types = cols(
+  Address = col_character(),
+  CaseNumber = col_character(),
+  CrimeAgainst = col_character(),
+  Neighborhood = col_character(),
+  OccurDate = col_character(),
+  OccurTime = col_character(),
+  OffenseCategory = col_character(),
+  OffenseType = col_character(),
+  OpenDataLat = col_double(),
+  OpenDataLon = col_double(),
+  OpenDataX = col_character(),
+  OpenDataY = col_character(),
+  ReportDate = col_character(),
+  OffenseCount = col_double()
+))
+
+crimeag19 <- ggplot(e, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
+  geom_bar() +
+  labs(
+    title = "Distribution of Crimes per Victim Type in 2019",
+    subtitle = "Year to Date (January through September)"
+  ) +
+  xlab("Type of Victim") +
+  ylab("Count") +
+  theme(legend.position = "none") +
+  theme_minimal()
+
+png("crimeag19.png", width = 576, height = 576, res = 120)
+crimeag19
+dev.off()
+
+# While it makes me nervous to keep the overwrite set to TRUE,
+# it makes it easier, because then it rewrites the image every
+# time I need to make a change to the plot. The trick is to
+# remember to change it in ggplot and also rerun the saving
+# and file copy functions.
+
+file_copy(
+  path = "crimeag19.png",
+  new_path = "pdx-probs/www/crimeag19.png",
+  overwrite = TRUE
+)
+```
 

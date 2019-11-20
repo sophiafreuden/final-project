@@ -32,7 +32,7 @@ ggsave(filename = "crimeag15.png", plot = plot15, device = png())
 
 file_copy(
   path = "crimeag15.png",
-  new_path = "finalproject/crimeag15.png",
+  new_path = "pdx-probs/crimeag15.png",
   overwrite = TRUE
 )
 
@@ -65,7 +65,7 @@ ggsave(filename = "crimeag16.png", plot = plot16, device = png())
 
 file_copy(
   path = "crimeag16.png",
-  new_path = "finalproject/crimeag16.png",
+  new_path = "pdx-probs/crimeag16.png",
   overwrite = TRUE
 )
 
@@ -131,7 +131,7 @@ ggsave(filename = "crimeag18.png", plot = plot18, device = png())
 
 file_copy(
   path = "crimeag18.png",
-  new_path = "finalproject/crimeag18.png",
+  new_path = "pdx-probs/crimeag18.png",
   overwrite = TRUE
 )
 
@@ -167,6 +167,6 @@ ggsave(filename = "crimeag19.png", plot = plot19, device = png())
 
 file_copy(
   path = "crimeag19.png",
-  new_path = "finalproject/crimeag19.png",
+  new_path = "pdx-probs/crimeag19.png",
   overwrite = TRUE
 )

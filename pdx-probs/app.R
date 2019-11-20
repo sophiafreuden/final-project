@@ -52,11 +52,13 @@ ui <- fluidPage(
           br(),
           # Vertical layout didn't seem to change anything?
           verticalLayout(
-            imageOutput(outputId = "crimeag15"),
-            imageOutput(outputId = "crimeag16"),
-            imageOutput(outputId = "crimeag17"),
-            imageOutput(outputId = "crimeag18"),
-            imageOutput(outputId = "crimeag19")
+            img(src = "crimeag15.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+            br(),
+            br(),
+            img(src = "crimeag16.png", style = "display: block; margin-left: auto; margin-right: auto;") # ,
+            # imageOutput(outputId = "crimeag17"),
+            # imageOutput(outputId = "crimeag18"),
+            # imageOutput(outputId = "crimeag19")
           )
         ),
         tabPanel(
