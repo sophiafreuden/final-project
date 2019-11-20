@@ -3,7 +3,7 @@ library(fs)
 library(lubridate)
 library(tidyverse)
 
-months15 <- read_csv(file = "raw-data/CrimeData-2015.csv", col_types = cols(
+months15 <- read_csv(file = "cleaned-data/CrimeData-2015.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
   CrimeAgainst = col_character(),
@@ -49,11 +49,11 @@ ggsave(filename = "plotmonths15.png", plot = plotmonths15, device = png())
 
 file_copy(
   path = "plotmonths15.png",
-  new_path = "finalproject/plotmonths15.png",
+  new_path = "pdx-probs/plotmonths15.png",
   overwrite = TRUE
 )
 
-months16 <- read_csv(file = "raw-data/CrimeData-2016.csv", col_types = cols(
+months16 <- read_csv(file = "cleaned-data/CrimeData-2016.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
   CrimeAgainst = col_character(),
@@ -99,11 +99,11 @@ ggsave(filename = "plotmonths16.png", plot = plotmonths16, device = png())
 
 file_copy(
   path = "plotmonths16.png",
-  new_path = "finalproject/plotmonths16.png",
+  new_path = "pdx-probs/plotmonths16.png",
   overwrite = TRUE
 )
 
-months17 <- read_csv(file = "raw-data/CrimeData-2017.csv", col_types = cols(
+months17 <- read_csv(file = "cleaned-data/CrimeData-2017.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
   CrimeAgainst = col_character(),
@@ -149,11 +149,11 @@ ggsave(filename = "plotmonths17.png", plot = plotmonths17, device = png())
 
 file_copy(
   path = "plotmonths17.png",
-  new_path = "finalproject/plotmonths17.png",
+  new_path = "pdx-probs/plotmonths17.png",
   overwrite = TRUE
 )
 
-months18 <- read_csv(file = "raw-data/CrimeData-2018.csv", col_types = cols(
+months18 <- read_csv(file = "cleaned-data/CrimeData-2018.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
   CrimeAgainst = col_character(),
@@ -199,11 +199,11 @@ ggsave(filename = "plotmonths18.png", plot = plotmonths18, device = png())
 
 file_copy(
   path = "plotmonths18.png",
-  new_path = "finalproject/plotmonths18.png",
+  new_path = "pdx-probs/plotmonths18.png",
   overwrite = TRUE
 )
 
-months19 <- read_csv(file = "raw-data/CrimeData-2019.csv", col_types = cols(
+months19 <- read_csv(file = "cleaned-data/CrimeData-2019.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
   CrimeAgainst = col_character(),
@@ -251,6 +251,6 @@ ggsave(filename = "plotmonths19.png", plot = plotmonths19, device = png())
 
 file_copy(
   path = "plotmonths19.png",
-  new_path = "finalproject/plotmonths19.png",
+  new_path = "pdx-probs/plotmonths19.png",
   overwrite = TRUE
 )

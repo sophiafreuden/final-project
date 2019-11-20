@@ -3,7 +3,7 @@ library(fs)
 library(readxl)
 library(tidyverse)
 
-custom <- read_xlsx(path = "raw-data/Crime Rate + Pop.xlsx")
+custom <- read_xlsx(path = "cleaned-data/Crime Rate + Pop.xlsx")
 
 propplot <- ggplot(custom, aes(x = Year, y = PropertyCrimeRt)) +
   geom_line() +
@@ -18,7 +18,7 @@ ggsave(filename = "propplot.png", plot = propplot, device = png())
 
 file_copy(
   path = "propplot.png",
-  new_path = "finalproject/propplot.png",
+  new_path = "pdx-probs/propplot.png",
   overwrite = TRUE
 )
 
@@ -35,7 +35,7 @@ ggsave(filename = "persplot.png", plot = persplot, device = png())
 
 file_copy(
   path = "persplot.png",
-  new_path = "finalproject/persplot.png",
+  new_path = "pdx-probs/persplot.png",
   overwrite = TRUE
 )
 
@@ -67,6 +67,6 @@ ggsave(filename = "proppredplot.png", plot = proppredplot, device = png())
 
 file_copy(
   path = "proppredplot.png",
-  new_path = "finalproject/proppredplot.png",
+  new_path = "pdx-probs/proppredplot.png",
   overwrite = TRUE
 )

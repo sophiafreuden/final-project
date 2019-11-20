@@ -3,7 +3,7 @@ library(fs)
 library(scales)
 library(tidyverse)
 
-a <- read_csv(file = "raw-data/CrimeData-2015.csv", col_types = cols(
+a <- read_csv(file = "cleaned-data/CrimeData-2015.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
   CrimeAgainst = col_character(),
@@ -36,7 +36,7 @@ file_copy(
   overwrite = TRUE
 )
 
-b <- read_csv(file = "raw-data/CrimeData-2016.csv", col_types = cols(
+b <- read_csv(file = "cleaned-data/CrimeData-2016.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
   CrimeAgainst = col_character(),
@@ -69,7 +69,7 @@ file_copy(
   overwrite = TRUE
 )
 
-c <- read_csv(file = "raw-data/CrimeData-2017.csv", col_types = cols(
+c <- read_csv(file = "cleaned-data/CrimeData-2017.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
   CrimeAgainst = col_character(),
@@ -98,11 +98,11 @@ ggsave(filename = "crimeag17.png", plot = plot17, device = png())
 
 file_copy(
   path = "crimeag17.png",
-  new_path = "finalproject/crimeag17.png",
+  new_path = "pdx-probs/crimeag17.png",
   overwrite = TRUE
 )
 
-d <- read_csv(file = "raw-data/CrimeData-2018.csv", col_types = cols(
+d <- read_csv(file = "cleaned-data/CrimeData-2018.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
   CrimeAgainst = col_character(),
@@ -135,7 +135,7 @@ file_copy(
   overwrite = TRUE
 )
 
-e <- read_csv(file = "raw-data/CrimeData-2019.csv", col_types = cols(
+e <- read_csv(file = "cleaned-data/CrimeData-2019.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
   CrimeAgainst = col_character(),

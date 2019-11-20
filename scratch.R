@@ -2,7 +2,7 @@ library(tidyverse)
 library(readxl)
 library(lubridate)
 
-x <- read_csv(file = "raw-data/CrimeData-2018.csv", col_types = cols(
+x <- read_csv(file = "cleaned-data/CrimeData-2018.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
   CrimeAgainst = col_character(),
@@ -40,7 +40,7 @@ ggplot(x, aes(x = CrimeAgainst)) + geom_bar()
 
 ggsave(filename = "test.png", plot = last_plot(), device = png())
 
-Unemp <- read_xlsx(path = "raw-data/BLS PDX Unemployment.xlsx")
+Unemp <- read_xlsx(path = "cleaned-data/BLS PDX Unemployment.xlsx")
 
 # Unemp$Avg <- rowMeans(y[,2:13], na.rm=TRUE)
 # 
@@ -144,5 +144,38 @@ Unemp3 <- Unemp %>%
          -`2016`,
          -`2017`,
          -`2018`,
-         -`2019`)
-Unemp3
+         -`2019`) %>%
+  ggplot(aes(x = Month, y = input$year)) +
+  geom_line() +
+  theme_minimal()
+
+# scale_x_continuous(breaks = c(2012, 2013, etc.)
+
+# scale_fill_manual(values = c("Assault" = "cadetblue", etc.))
+
+dummy2 <- crime18 %>%
+  filter(CrimeAgainst == "Society") %>%
+  ggplot(aes(x = OffenseType, fill = OffenseType)) +
+  geom_bar(show.legend = FALSE) +
+  coord_flip() +
+  scale_y_log10() +
+  ylab("Count") +
+  labs(caption = "test") +
+  theme_minimal()
+
+png("dummy2.png")
+dummy2
+dev.off()
+
+file_copy(
+  path = "dummy2.png",
+  new_path = "pdx-probs/www/dummy2.png",
+  overwrite = TRUE
+)
+
+
+
+
+# png("graphics/plotname.png")
+# plotname
+# dev.off()

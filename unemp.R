@@ -3,7 +3,7 @@ library(fs)
 library(readxl)
 library(tidyverse)
 
-unemp <- read_xlsx(path = "raw-data/BLS PDX Unemployment.xlsx")
+unemp <- read_xlsx(path = "cleaned-data/BLS PDX Unemployment.xlsx")
 
 unemp$Avg <- rowMeans(y[, 2:13], na.rm = TRUE)
 
@@ -23,11 +23,11 @@ ggsave(filename = "unempplot.png", plot = unempplot, device = png())
 
 file_copy(
   path = "unempplot.png",
-  new_path = "finalproject/unempplot.png",
+  new_path = "pdx-probs/unempplot.png",
   overwrite = TRUE
 )
 
-custom2 <- read_xlsx(path = "raw-data/Crime Rate + Pop.xlsx")
+custom2 <- read_xlsx(path = "cleaned-data/Crime Rate + Pop.xlsx")
 
 custom2 <- custom2 %>%
   select(Year, PropertyCrimeRt, PersonCrmRt)
@@ -50,7 +50,7 @@ ggsave(filename = "unemppropcrime.png", plot = unemppropcrime, device = png())
 
 file_copy(
   path = "unemppropcrime.png",
-  new_path = "finalproject/unemppropcrime.png",
+  new_path = "pdx-probs/unemppropcrime.png",
   overwrite = TRUE
 )
 
@@ -70,6 +70,6 @@ ggsave(filename = "unempperscrime.png", plot = unempperscrime, device = png())
 
 file_copy(
   path = "unempperscrime.png",
-  new_path = "finalproject/unempperscrime.png",
+  new_path = "pdx-probs/unempperscrime.png",
   overwrite = TRUE
 )

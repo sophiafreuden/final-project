@@ -2,7 +2,7 @@
 library(fs)
 library(tidyverse)
 
-pop <- read_csv("raw-data/2010-2018 census pop estimates.csv", col_types = cols(
+pop <- read_csv("cleaned-data/2010-2018 census pop estimates.csv", col_types = cols(
   Year = col_double(),
   PopulationCen = col_double()
 ))
@@ -21,7 +21,7 @@ ggsave(filename = "popplot.png", plot = popplot, device = png())
 
 file_copy(
   path = "popplot.png",
-  new_path = "finalproject/popplot.png",
+  new_path = "pdx-probs/popplot.png",
   overwrite = TRUE
 )
 
@@ -39,7 +39,7 @@ ggsave(filename = "popplot2.png", plot = popplot2, device = png())
 
 file_copy(
   path = "popplot2.png",
-  new_path = "finalproject/popplot2.png",
+  new_path = "pdx-probs/popplot2.png",
   overwrite = TRUE
 )
 
@@ -75,7 +75,7 @@ ggsave(filename = "poppredplot.png", plot = poppredplot, device = png())
 
 file_copy(
   path = "poppredplot.png",
-  new_path = "finalproject/poppredplot.png",
+  new_path = "pdx-probs/poppredplot.png",
   overwrite = TRUE
 )
 
@@ -96,6 +96,6 @@ ggsave(filename = "poppredplot2.png", plot = poppredplot2, device = png())
 
 file_copy(
   path = "poppredplot2.png",
-  new_path = "finalproject/poppredplot2.png",
+  new_path = "pdx-probs/poppredplot2.png",
   overwrite = TRUE
 )
