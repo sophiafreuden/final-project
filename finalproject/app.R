@@ -58,9 +58,11 @@ ui <- fluidPage(
           )
         ),
         tabPanel(
-          "test2",
-          h3("test2"),
-          "Does this work?"
+          "Crime Rate Over Time",
+          h3("Person and Property Crime Rates Over Time, Plus Predictions for 2019 through 2023"),
+          imageOutput(outputId = "persplot"),
+          imageOutput(outputId = "propplot"),
+          imageOutput(outputId = "proppredplot")
         )
       )
     )
@@ -109,6 +111,24 @@ server <- function(input, output) {
   output$crimeag19 <- renderImage({
     list(
       src = "crimeag19.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
+  output$persplot <- renderImage({
+    list(
+      src = "persplot.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
+  output$propplot <- renderImage({
+    list(
+      src = "propplot.png",
+      contentType = "image/gif"
+    )
+  }, deleteFile = FALSE)
+  output$proppredplot <- renderImage({
+    list(
+      src = "proppredplot.png",
       contentType = "image/gif"
     )
   }, deleteFile = FALSE)
