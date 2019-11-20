@@ -44,6 +44,14 @@ plotmonths15 <- ggplot(monthspread15, aes(x = OccurMonth, y = n)) +
   geom_smooth(method = "lm", se = FALSE) +
   scale_y_continuous(limits = c(0, NA))
 
+ggsave(filename = "plotmonths15.png", plot = plotmonths15, device = png())
+
+file_copy(
+  path = "plotmonths15.png",
+  new_path = "finalproject/plotmonths15.png",
+  overwrite = TRUE
+)
+
 months16 <- read_csv(file = "raw-data/CrimeData-2016.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
@@ -85,6 +93,14 @@ plotmonths16 <- ggplot(monthspread16, aes(x = OccurMonth, y = n)) +
   xlab("Month") +
   ylab("Number of Crimes Reported") +
   geom_smooth(method = "lm", se = FALSE)
+
+ggsave(filename = "plotmonths16.png", plot = plotmonths16, device = png())
+
+file_copy(
+  path = "plotmonths16.png",
+  new_path = "finalproject/plotmonths16.png",
+  overwrite = TRUE
+)
 
 months17 <- read_csv(file = "raw-data/CrimeData-2017.csv", col_types = cols(
   Address = col_character(),
@@ -128,6 +144,14 @@ plotmonths17 <- ggplot(monthspread17, aes(x = OccurMonth, y = n)) +
   ylab("Number of Crimes Reported") +
   geom_smooth(method = "lm", se = FALSE)
 
+ggsave(filename = "plotmonths17.png", plot = plotmonths17, device = png())
+
+file_copy(
+  path = "plotmonths17.png",
+  new_path = "finalproject/plotmonths17.png",
+  overwrite = TRUE
+)
+
 months18 <- read_csv(file = "raw-data/CrimeData-2018.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
@@ -169,6 +193,14 @@ plotmonths18 <- ggplot(monthspread18, aes(x = OccurMonth, y = n)) +
   xlab("Month") +
   ylab("Number of Crimes Reported") +
   geom_smooth(method = "lm", se = FALSE)
+
+ggsave(filename = "plotmonths18.png", plot = plotmonths18, device = png())
+
+file_copy(
+  path = "plotmonths18.png",
+  new_path = "finalproject/plotmonths18.png",
+  overwrite = TRUE
+)
 
 months19 <- read_csv(file = "raw-data/CrimeData-2019.csv", col_types = cols(
   Address = col_character(),
@@ -213,3 +245,11 @@ plotmonths19 <- ggplot(monthspread19, aes(x = OccurMonth, y = n)) +
   xlab("Month") +
   ylab("Number of Crimes Reported") +
   geom_smooth(method = "lm", se = FALSE)
+
+ggsave(filename = "plotmonths19.png", plot = plotmonths19, device = png())
+
+file_copy(
+  path = "plotmonths19.png",
+  new_path = "finalproject/plotmonths19.png",
+  overwrite = TRUE
+)
