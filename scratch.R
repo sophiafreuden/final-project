@@ -92,3 +92,57 @@ Unemp2 <- Unemp2 %>%
          -`2018`,
          -`2019`)
 
+Unemp3 <- Unemp %>%
+  gather(`Jan`,
+         `Feb`,
+         `Mar`,
+         `Apr`,
+         `May`,
+         `Jun`,
+         `Jul`,
+         `Aug`,
+         `Sep`,
+         `Oct`,
+         `Nov`,
+         `Dec`,
+         key = "Month",
+         value = "Rate") %>%
+  spread(key = "Year",
+         value = "Rate") %>%
+  mutate(Month = case_when(
+    Month == "Apr" ~ 4,
+    Month == "Aug" ~ 8,
+    Month == "Dec" ~ 12,
+    Month == "Feb" ~ 2,
+    Month == "Jan" ~ 1,
+    Month == "Jul" ~ 7,
+    Month == "Jun" ~ 6,
+    Month == "Mar" ~ 3,
+    Month == "May" ~ 5,
+    Month == "Nov" ~ 11,
+    Month == "Oct" ~ 10,
+    Month == "Sep" ~ 9
+  )) %>%
+  mutate(r2009 = `2009`) %>%
+  mutate(r2010 = `2010`) %>%
+  mutate(r2011 = `2011`) %>%
+  mutate(r2012 = `2012`) %>%
+  mutate(r2013 = `2013`) %>%
+  mutate(r2014 = `2014`) %>%
+  mutate(r2015 = `2015`) %>%
+  mutate(r2016 = `2016`) %>%
+  mutate(r2017 = `2017`) %>%
+  mutate(r2018 = `2018`) %>%
+  mutate(r2019 = `2019`) %>%
+  select(-`2009`,
+         -`2010`,
+         -`2011`,
+         -`2012`,
+         -`2013`,
+         -`2014`,
+         -`2015`,
+         -`2016`,
+         -`2017`,
+         -`2018`,
+         -`2019`)
+Unemp3
