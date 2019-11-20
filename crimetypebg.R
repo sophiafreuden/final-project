@@ -107,4 +107,37 @@ pers_crime18 <- crime18 %>% filter(CrimeAgainst == "Person")
 
 pers_crime19 <- crime19 %>% filter(CrimeAgainst == "Person")
 
+soc_crime15 <- crime15 %>% filter(CrimeAgainst == "Society")
+
+soc_crime16 <- crime16 %>% filter(CrimeAgainst == "Society")
+
+soc_crime17 <- crime17 %>% filter(CrimeAgainst == "Society")
+
+soc_crime18 <- crime18 %>% filter(CrimeAgainst == "Society")
+
+soc_crime19 <- crime19 %>% filter(CrimeAgainst == "Society")
+
+prop_crime15 <- crime15 %>% filter(CrimeAgainst == "Property")
+
+prop_crime16 <- crime16 %>% filter(CrimeAgainst == "Property")
+
+prop_crime17 <- crime17 %>% filter(CrimeAgainst == "Property")
+
+prop_crime18 <- crime18 %>% filter(CrimeAgainst == "Property")
+
+prop_crime19 <- crime19 %>% filter(CrimeAgainst == "Property")
+
 allPersCrime <- bind_rows(pers_crime15, pers_crime16, pers_crime17, pers_crime18, pers_crime19)
+
+allSocCrime <- bind_rows(soc_crime15, soc_crime16, soc_crime17, soc_crime18, soc_crime19)
+
+allPropCrime <- bind_rows(prop_crime15, prop_crime16, prop_crime17, prop_crime18, prop_crime19)
+
+ggplot(allPersCrime, aes(x = OffenseCategory)) + geom_bar() + coord_flip()
+
+ggplot(allPersCrime, aes(x = OffenseType)) + geom_bar() + coord_flip() + scale_y_log10()
+
+ggplot(allSocCrime, aes(x = OffenseType)) + geom_bar() + coord_flip() + scale_y_log10()
+
+ggplot(allPropCrime, aes(x = OffenseType)) + geom_bar() + coord_flip() + scale_y_log10()
+
