@@ -1,0 +1,68 @@
+---
+title: "crimeagimg"
+author: "Sophia Freuden"
+date: "11/20/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(fs)
+library(scales)
+library(tidyverse)
+```
+
+### R Markdown for Crime in 2018 by Victim Type
+
+```{r}
+a <- read_csv(file = "cleaned-data/CrimeData-2015.csv", col_types = cols(
+  Address = col_character(),
+  CaseNumber = col_character(),
+  CrimeAgainst = col_character(),
+  Neighborhood = col_character(),
+  OccurDate = col_character(),
+  OccurTime = col_character(),
+  OffenseCategory = col_character(),
+  OffenseType = col_character(),
+  OpenDataLat = col_double(),
+  OpenDataLon = col_double(),
+  OpenDataX = col_character(),
+  OpenDataY = col_character(),
+  ReportDate = col_character(),
+  OffenseCount = col_double()
+))
+```
+
+```{r}
+# I originally had all of the code in this Rmd in an R script file
+# that I had been using to build my project. Because of issues I
+# was having with my images printing in Shiny properly, I decided
+# to switch how I was saving my plots as images based off of a
+# recommendation Bernadette gave me.
+
+crimeag15 <- ggplot(a, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
+  geom_bar() +
+  labs(title = "Distribution of Crimes per Victim Type in 2015") +
+  xlab("Type of Victim") +
+  ylab("Count") +
+  theme(legend.position = "none") +
+  theme_minimal()
+
+# Prior to this, I had been using ggsave in a similar way. Bernadette
+# said she found the method below online because she was having similar
+# issues with getting her images to load properly. Because this method
+# doesn't employ pipes, having it split into "runnable" code chunks
+# in an Rmd made more sense than 
+
+png("crimeag15.png", width = 576, height = 576, res = 120)
+crimeag15
+dev.off()
+
+file_copy(
+  path = "crimeag15.png",
+  new_path = "pdx-probs/www/crimeag15.png",
+  overwrite = TRUE
+)
+```
+
+

@@ -163,7 +163,7 @@ dummy2 <- crime18 %>%
   labs(caption = "test") +
   theme_minimal()
 
-png("dummy2.png")
+png("dummy2.png", res = 100)
 dummy2
 dev.off()
 

@@ -92,7 +92,7 @@ ui <- fluidPage(
     tabPanel(
       "About",
       h3("This is my about page placeholder."),
-      img(src = "dummy2.png")
+      img(src = "crimeag15.png")
     )
   )
 )
