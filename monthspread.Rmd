@@ -13,7 +13,15 @@ library(lubridate)
 library(tidyverse)
 ```
 
-### R Markdown for Differing Crime Rates Plotted Over Time and Precitions
+### R Markdown for Differing Crime Rates Plotted Over Time and Precitions  
+
+<br>
+
+#### These plots are rendered as images and saved to a directory within my app that then renders them in Shiny.  
+
+<br>
+
+*Please see the readme file for specific instructions on how to run these codes chunks (i.e. what order to run them in).*  
 
 ```{r reading in data for 2015 crime}
 # I do more or less the same thing across multiple Rmd files,
@@ -98,7 +106,7 @@ plotmonths15 <- ggplot(monthspread15, aes(x = OccurMonth, y = n)) +
 # Note to self: do not keep lm line in these plots.
 ```
 
-```{r saving the plot of 2015 crime count by month}
+```{r saving the plot of 2015 crime count by month, include=FALSE}
 # The image seemed a little smooshed together after I
 # checked it out in Previewer, so I altered the width
 # here to be 606 instead of my standard 576.
@@ -116,7 +124,7 @@ file_copy(
 file_delete(path = "plotmonths15.png")
 ```
 
-```{r 2016 monthly crime count plot and image}
+```{r 2016 monthly crime count plot and image, include=FALSE}
 # The rest of this file is just a lot of copying and pasting
 # the basic structure I've laid out above, but adjusting
 # for which year (and therefore data file) you are looking
@@ -176,9 +184,20 @@ file_copy(
 )
 
 file_delete(path = "plotmonths16.png")
+
+# I recommend running each of these chunks at a time to make
+# sure the images are rendering properly. My code chunks
+# are a bit large here because I am just copying and pasting
+# from an R script file that had all of this code in it
+# originally. Because I tested it a lot there, I know it works
+# here (plus my images are rendering properly).
+
+# If you are having issues with these large code chunks, try
+# breaking them up into smaller pieces to see where the errors
+# are originating from.
 ```
 
-```{r 2016 monthly crime count plot and image}
+```{r 2017 monthly crime count plot and image, include=FALSE}
 months17 <- read_csv(file = "cleaned-data/CrimeData-2017.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
@@ -235,7 +254,131 @@ file_copy(
 file_delete(path = "plotmonths17.png")
 ```
 
-```{r}
+```{r 2018 monthly crime count plot and image, include=FALSE}
+months18 <- read_csv(file = "cleaned-data/CrimeData-2018.csv", col_types = cols(
+  Address = col_character(),
+  CaseNumber = col_character(),
+  CrimeAgainst = col_character(),
+  Neighborhood = col_character(),
+  OccurDate = col_character(),
+  OccurTime = col_character(),
+  OffenseCategory = col_character(),
+  OffenseType = col_character(),
+  OpenDataLat = col_double(),
+  OpenDataLon = col_double(),
+  OpenDataX = col_character(),
+  OpenDataY = col_character(),
+  ReportDate = col_character(),
+  OffenseCount = col_double()
+))
 
+months18 <- months18 %>%
+  mutate(OccurDate = mdy(OccurDate)) %>%
+  mutate(ReportDate = mdy(ReportDate))
+
+months18 <- months18 %>%
+  mutate(OccurYear = year(OccurDate)) %>%
+  mutate(OccurMonth = month(OccurDate))
+
+monthspread18 <- months18 %>%
+  filter(OccurYear == 2018) %>%
+  group_by(OccurMonth) %>%
+  count()
+
+plotmonths18 <- ggplot(monthspread18, aes(x = OccurMonth, y = n)) +
+  geom_line() +
+  theme_minimal() +
+  labs(
+    title = "Number of Total Crimes Over Months in 2018",
+    subtitle = "Feburary and December show lulls in reported crime.",
+    caption = "2018 graph scaled on y axis to show dynamism."
+  ) +
+  xlab("Month") +
+  ylab("Number of Crimes Reported") +
+  scale_y_continuous(labels = comma) +
+  scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12))
+
+png("plotmonths18.png", width = 606, height = 576, res = 120)
+plotmonths18
+dev.off()
+
+file_copy(
+  path = "plotmonths18.png",
+  new_path = "pdx-probs/www/plotmonths18.png",
+  overwrite = TRUE
+)
+
+file_delete(path = "plotmonths18.png")
+```
+
+```{r 2019 monthly crime count plot and image, include=FALSE}
+months19 <- read_csv(file = "cleaned-data/CrimeData-2019.csv", col_types = cols(
+  Address = col_character(),
+  CaseNumber = col_character(),
+  CrimeAgainst = col_character(),
+  Neighborhood = col_character(),
+  OccurDate = col_character(),
+  OccurTime = col_character(),
+  OffenseCategory = col_character(),
+  OffenseType = col_character(),
+  OpenDataLat = col_double(),
+  OpenDataLon = col_double(),
+  OpenDataX = col_character(),
+  OpenDataY = col_character(),
+  ReportDate = col_character(),
+  OffenseCount = col_double()
+))
+
+months19 <- months19 %>%
+  mutate(OccurDate = mdy(OccurDate)) %>%
+  mutate(ReportDate = mdy(ReportDate))
+
+months19 <- months19 %>%
+  mutate(OccurYear = year(OccurDate)) %>%
+  mutate(OccurMonth = month(OccurDate))
+
+monthspread19 <- months19 %>%
+  filter(OccurYear == 2019) %>%
+  group_by(OccurMonth) %>%
+  count()
+
+plotmonths19 <- ggplot(monthspread19, aes(x = OccurMonth, y = n)) +
+  geom_line() +
+  theme_minimal() +
+  labs(
+    title = "Number of Total Crimes Over Months in Jan.
+    through Sept. 2019",
+    subtitle = "Feburary and September show lulls in reported crime.",
+    caption = "2019 graph scaled on y axis to show dynamism.
+       This data is pulled from a file that includes only year-to-date data for 2019.
+       September lull may be attributed to year-to-date nature of data."
+  ) +
+  xlab("Month") +
+  ylab("Number of Crimes Reported") +
+  scale_y_continuous(labels = comma) +
+  scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12))
+
+png("plotmonths19.png", width = 576, height = 576, res = 120)
+plotmonths19
+dev.off()
+
+# On second thought, changing the width above doesn't seem to do much
+# of anything.
+
+file_copy(
+  path = "plotmonths19.png",
+  new_path = "pdx-probs/www/plotmonths19.png",
+  overwrite = TRUE
+)
+
+file_delete(path = "plotmonths19.png")
+```
+
+```{r}
+plotmonths15
+plotmonths16
+plotmonths17
+plotmonths18
+plotmonths19
 ```
 
