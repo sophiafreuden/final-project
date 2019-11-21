@@ -12,7 +12,15 @@ library(scales)
 library(tidyverse)
 ```
 
-### R Markdown for Crime in 2018 by Victim Type
+### R Markdown for Crime in 2018 by Victim Type  
+
+<br>
+
+#### These plots are rendered as images and saved to a directory within my app that then renders them in Shiny.  
+
+<br>
+
+*Please see the readme file for specific instructions on how to run these codes chunks (i.e. what order to run them in).*  
 
 ```{r reading in 2015 crime file}
 # I determined early on what columns would need to be cast for my
@@ -40,7 +48,7 @@ a <- read_csv(file = "cleaned-data/CrimeData-2015.csv", col_types = cols(
 ))
 ```
 
-```{r 2015 crime against plot and image}
+```{r 2015 crime against plot and image, include=FALSE}
 # I originally had all of the code in this Rmd in an R script file
 # that I had been using to build my project. Because of issues I
 # was having with my images printing in Shiny properly, I decided
@@ -76,7 +84,7 @@ file_copy(
 file_delete(path = "crimeag15.png")
 ```
 
-```{r 2016 crime against plot and image}
+```{r 2016 crime against plot and image, include=FALSE}
 b <- read_csv(file = "cleaned-data/CrimeData-2016.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
@@ -127,7 +135,7 @@ file_copy(
 file_delete(path = "crimeag16.png")
 ```
 
-```{r 2017 crime against plot and image}
+```{r 2017 crime against plot and image, include=FALSE}
 c <- read_csv(file = "cleaned-data/CrimeData-2017.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
@@ -170,7 +178,7 @@ file_copy(
 file_delete(path = "crimeag17.png")
 ```
 
-```{r 2018 crime against plot and image}
+```{r 2018 crime against plot and image, include=FALSE}
 d <- read_csv(file = "cleaned-data/CrimeData-2018.csv", col_types = cols(
   Address = col_character(),
   CaseNumber = col_character(),
@@ -211,7 +219,7 @@ file_copy(
 file_delete(path = "crimeag18.png")
 ```
 
-```{r 2018 crime against plot and image}
+```{r 2018 crime against plot and image, include=FALSE}
 
 # Don't forget your code chunk titles!
 
@@ -265,5 +273,13 @@ file_copy(
 # Leave no trails. I added this file_delete to all the chunks in this Rmd to get rid of the unnecessary pngs I created in the process of creating these images.
 
 file_delete(path = "crimeag19.png")
+```
+
+```{r}
+crimeag15
+crimeag16
+crimeag17
+crimeag18
+crimeag19
 ```
 
