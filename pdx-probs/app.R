@@ -86,11 +86,22 @@ ui <- fluidPage(
         tabPanel(
           "Crimes Per Month",
           h3("Number of Reported Crimes Per Month from 2015 to 2019"),
-          imageOutput(outputId = "plotmonths15"),
-          imageOutput(outputId = "plotmonths16"),
-          imageOutput(outputId = "plotmonths17"),
-          imageOutput(outputId = "plotmonths18"),
-          imageOutput(outputId = "plotmonths19")
+          br(),
+          img(src = "plotmonths15.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+          br(),
+          br(),
+          img(src = "plotmonths16.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+          br(),
+          br(),
+          img(src = "plotmonths17.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+          br(),
+          br(),
+          img(src = "plotmonths18.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+          br(),
+          br(),
+          img(src = "plotmonths19.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+          br(),
+          br()
         ),
         tabPanel(
           "Population",
@@ -129,36 +140,6 @@ server <- function(input, output) {
       labs(caption = "test") +
       theme_minimal()
   })
-  output$plotmonths15 <- renderImage({
-    list(
-      src = "plotmonths15.png",
-      contentType = "image/gif"
-    )
-  }, deleteFile = FALSE)
-  output$plotmonths16 <- renderImage({
-    list(
-      src = "plotmonths16.png",
-      contentType = "image/gif"
-    )
-  }, deleteFile = FALSE)
-  output$plotmonths17 <- renderImage({
-    list(
-      src = "plotmonths17.png",
-      contentType = "image/gif"
-    )
-  }, deleteFile = FALSE)
-  output$plotmonths18 <- renderImage({
-    list(
-      src = "plotmonths18.png",
-      contentType = "image/gif"
-    )
-  }, deleteFile = FALSE)
-  output$plotmonths19 <- renderImage({
-    list(
-      src = "plotmonths19.png",
-      contentType = "image/gif"
-    )
-  }, deleteFile = FALSE)
   output$popplot <- renderImage({
     list(
       src = "popplot.png",
