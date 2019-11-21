@@ -12,7 +12,15 @@ library(readxl)
 library(tidyverse)
 ```
 
-### R Markdown for Differing Crime Rates Plotted Over Time and Precitions
+### R Markdown for Differing Crime Rates Plotted Over Time and Precitions  
+
+<br>
+
+#### These plots are rendered as images and saved to a directory within my app that then renders them in Shiny.  
+
+<br>
+
+*Please see the readme file for specific instructions on how to run these codes chunks (i.e. what order to run them in).*  
 
 ```{r reading in crime rate and population data}
 custom <- read_xlsx(path = "cleaned-data/Crime Rate + Pop.xlsx")
@@ -51,7 +59,16 @@ propplot <- ggplot(custom, aes(x = Year, y = PropertyCrimeRt)) +
 # on when to use lm lines or not.
 ```
 
-```{r saving the propery crime rate plot as an image}
+```{r saving the propery crime rate plot as an image, include=FALSE}
+# I'm not sure if these Rmd files need to knit nicely as
+# a part of this assignment. I tried knitting one and it
+# worked, but I was getting weird messages in the knit
+# as a result of my image-saving code. I set include=FALSE
+# in all code chunks in all Rmd files that had this image
+# saving code. I also created a redunant code chunk at the
+# end that has the plots of each of the files in them
+# so that the visual would show up in a knit.
+
 # This uses the same methods that I explain in detail in my
 # crimeagimg Rmd. The first chunk produces and saves the image
 # and the second one copies it into my app. The third deletes
@@ -78,7 +95,7 @@ file_delete(path = "propplot.png")
 # right places and then deleted from the working directory.
 ```
 
-```{r plotting the person crime rate over time}
+```{r plotting the person crime rate over time, include=FALSE}
 # This is the same thing as above, but this plots the person
 # crime rate instead of the property crime rate.
 
@@ -183,7 +200,7 @@ proppredplot <- ggplot(proppred, aes(x = Year, y = PropertyCrimeRt)) +
 # to dictate which years I thought it should display.
 ```
 
-```{r saving the plot of my predicted values for 2019 through 2023}
+```{r saving the plot of my predicted values for 2019 through 2023, include=FALSE}
 png("proppredplot.png", width = 576, height = 576, res = 120)
 proppredplot
 dev.off()
@@ -201,5 +218,11 @@ file_delete(path = "proppredplot.png")
 
 # Note to self: any further changes made to these plots should
 # be made in this rmd and not the original R script file.
+```
+
+```{r}
+propplot
+persplot
+proppredplot
 ```
 

@@ -107,6 +107,15 @@ plotmonths15 <- ggplot(monthspread15, aes(x = OccurMonth, y = n)) +
 ```
 
 ```{r saving the plot of 2015 crime count by month, include=FALSE}
+# I'm not sure if these Rmd files need to knit nicely as
+# a part of this assignment. I tried knitting one and it
+# worked, but I was getting weird messages in the knit
+# as a result of my image-saving code. I set include=FALSE
+# in all code chunks in all Rmd files that had this image
+# saving code. I also created a redunant code chunk at the
+# end that has the plots of each of the files in them
+# so that the visual would show up in a knit.
+
 # The image seemed a little smooshed together after I
 # checked it out in Previewer, so I altered the width
 # here to be 606 instead of my standard 576.
