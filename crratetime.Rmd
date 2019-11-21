@@ -6,25 +6,93 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
+library(fs)
+library(readxl)
+library(tidyverse)
 ```
 
-## R Markdown
+```{r reading in crime rate and population data}
+custom <- read_xlsx(path = "cleaned-data/Crime Rate + Pop.xlsx")
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+# This reads in the data table that I made from hand by copying
+# the data from the PDF I found from the PPB. This data also
+# contains a population column from the U.S. Census that I copied
+# from a separate csv file that I got. You could hypoethetically
+# do a join to produced the same data tibble here in R, but
+# because I was already in the process of creating the Excel
+# file, I decided this was easiest. I also make a note of this in
+# my readme file.
 ```
 
-## Including Plots
+```{r plotting property crime rate over time}
+# I knew roughly what I wanted this graph to look like before I
+# made it. I wanted it to be a line graph (which generally make
+# the most sense for single data plots per x axis point, so year
+# in this case). From there, I just needed to add labels and such
+# based of what I saw in the original plot. I also added a
+# minimal theme. I used minimal themes in all of my graphs for
+# my app.
 
-You can also embed plots, for example:
+propplot <- ggplot(custom, aes(x = Year, y = PropertyCrimeRt)) +
+  geom_line() +
+  labs(title = "Property Crime Rate Over Time",
+       subtitle = "Seemingly Sharp Increase in Population Over Time",
+       caption = "The rate is number of crimes per 1,000 people.") +
+  ylab("Property Crime Rate") +
+  theme_minimal() +
+  geom_smooth(method = "lm", se = FALSE)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+# Note to self: keep the lm here per Georgie's general feedback
+# on when to use lm lines or not.
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r saving the propery crime rate plot as an image}
+# This uses the same methods that I explain in detail in my
+# crimeagimg Rmd. The first chunk produces and saves the image
+# and the second one copies it into my app. The third deletes
+# the intermediate version of it that is produced in the
+# working directory.
+
+png("propplot.png", width = 576, height = 576, res = 120)
+propplot
+dev.off()
+
+file_copy(
+  path = "propplot.png",
+  new_path = "pdx-probs/www/propplot.png",
+  overwrite = TRUE
+)
+
+file_delete(path = "propplot.png")
+
+# Don't forget the little things, like the ".png" above!
+
+# If you are worried about whether this method works,
+# definitely test it out and ensure that the images are
+# rendering how they should be and are being saved in the
+# right places and then deleted from the working directory.
+```
+
+```{r plotting the person crime rate over time}
+# This is the same thing as above, but this plots the person
+# crime rate instead of the property crime rate.
+
+persplot <- ggplot(custom, aes(x = Year, y = PersonCrmRt)) +
+  geom_line() +
+  labs(title = "Person Crime Rate Over Time",
+       subtitle = "Slight Increase Over Time",
+       caption = "The rate is number of crimes per 1,000 people.") +
+  ylab("Person Crime Rate") +
+  theme_minimal() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggsave(filename = "persplot.png", plot = persplot, device = png())
+
+file_copy(
+  path = "persplot.png",
+  new_path = "pdx-probs/persplot.png",
+  overwrite = TRUE
+)
+```
+
