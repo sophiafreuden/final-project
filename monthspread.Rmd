@@ -178,3 +178,64 @@ file_copy(
 file_delete(path = "plotmonths16.png")
 ```
 
+```{r 2016 monthly crime count plot and image}
+months17 <- read_csv(file = "cleaned-data/CrimeData-2017.csv", col_types = cols(
+  Address = col_character(),
+  CaseNumber = col_character(),
+  CrimeAgainst = col_character(),
+  Neighborhood = col_character(),
+  OccurDate = col_character(),
+  OccurTime = col_character(),
+  OffenseCategory = col_character(),
+  OffenseType = col_character(),
+  OpenDataLat = col_double(),
+  OpenDataLon = col_double(),
+  OpenDataX = col_character(),
+  OpenDataY = col_character(),
+  ReportDate = col_character(),
+  OffenseCount = col_double()
+))
+
+months17 <- months17 %>%
+  mutate(OccurDate = mdy(OccurDate)) %>%
+  mutate(ReportDate = mdy(ReportDate))
+
+months17 <- months17 %>%
+  mutate(OccurYear = year(OccurDate)) %>%
+  mutate(OccurMonth = month(OccurDate))
+
+monthspread17 <- months17 %>%
+  filter(OccurYear == 2017) %>%
+  group_by(OccurMonth) %>%
+  count()
+
+plotmonths17 <- ggplot(monthspread17, aes(x = OccurMonth, y = n)) +
+  geom_line() +
+  theme_minimal() +
+  labs(
+    title = "Number of Total Crimes Over Months in 2017",
+    subtitle = "January and December show lulls in reported crime.",
+    caption = "2017 graph scaled on y axis to show dynamism."
+  ) +
+  xlab("Month") +
+  ylab("Number of Crimes Reported") +
+  scale_y_continuous(labels = comma) +
+  scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12))
+
+png("plotmonths17.png", width = 606, height = 576, res = 120)
+plotmonths17
+dev.off()
+
+file_copy(
+  path = "plotmonths17.png",
+  new_path = "pdx-probs/www/plotmonths17.png",
+  overwrite = TRUE
+)
+
+file_delete(path = "plotmonths17.png")
+```
+
+```{r}
+
+```
+
