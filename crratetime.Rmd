@@ -12,6 +12,8 @@ library(readxl)
 library(tidyverse)
 ```
 
+### R Markdown for Differing Crime Rates Plotted Over Time and Precitions
+
 ```{r reading in crime rate and population data}
 custom <- read_xlsx(path = "cleaned-data/Crime Rate + Pop.xlsx")
 
