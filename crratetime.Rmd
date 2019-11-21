@@ -36,9 +36,11 @@ custom <- read_xlsx(path = "cleaned-data/Crime Rate + Pop.xlsx")
 
 propplot <- ggplot(custom, aes(x = Year, y = PropertyCrimeRt)) +
   geom_line() +
-  labs(title = "Property Crime Rate Over Time",
-       subtitle = "Seemingly Sharp Increase in Population Over Time",
-       caption = "The rate is number of crimes per 1,000 people.") +
+  labs(
+    title = "Property Crime Rate Over Time",
+    subtitle = "Seemingly Sharp Increase in Population Over Time",
+    caption = "The rate is number of crimes per 1,000 people."
+  ) +
   ylab("Property Crime Rate") +
   theme_minimal() +
   geom_smooth(method = "lm", se = FALSE)
@@ -80,9 +82,11 @@ file_delete(path = "propplot.png")
 
 persplot <- ggplot(custom, aes(x = Year, y = PersonCrmRt)) +
   geom_line() +
-  labs(title = "Person Crime Rate Over Time",
-       subtitle = "Slight Increase Over Time",
-       caption = "The rate is number of crimes per 1,000 people.") +
+  labs(
+    title = "Person Crime Rate Over Time",
+    subtitle = "Slight Increase Over Time",
+    caption = "The rate is number of crimes per 1,000 people."
+  ) +
   ylab("Person Crime Rate") +
   theme_minimal()
 
@@ -101,7 +105,99 @@ file_copy(
 file_delete(path = "persplot.png")
 ```
 
-```{r}
+```{r creating a tibble for predictions for 2019 through 2023}
+# While this is fairly simple and straightforward, I had
+# never done anything like this before. I initially looked
+# for an R function that would automatically add predicted
+# vales to a plot and then continue the line from there.
+# I couldn't find exactly what I wanted, so I decided
+# to make my own tibbles.
 
+future <- tibble(Year = c(2019, 2020, 2021, 2022, 2023))
+
+# First I made a simple tibble that would get fed into
+# my lm function to predict those population values
+# for those years.
+
+model <- lm(PropertyCrimeRt ~ Year, data = custom)
+
+# Then I constructed the necessary lm function to feed
+# into the predict() function in R.
+
+rows <- tibble(
+  PropertyCrimeRt = predict(model, newdata = future),
+  Year = c(2019, 2020, 2021, 2022, 2023)
+)
+
+# Then I made another tibble that combines my lm data
+# and the year values.
+
+proponly <- custom %>%
+  select(PropertyCrimeRt, Year)
+
+# I made things simple by identifying the columns I wanted.
+# This is unnecessary, but it makes life easier. I didn't
+# want a ton on NA values for the columns in my Excel
+# file that are irrelevant to my prediction model.
+
+proppred <- proponly %>% bind_rows(rows)
+
+# Bernadette told me about the bind_rows() function, which
+# is kind of like joining data, but by rows istead of columns.
+# I played around with test data to make sure all of this worked,
+# none of which I included here... but I do recommend testing
+# things before putting them in Shiny.
+```
+
+```{r plotting my property crime rate prediction}
+# This was straightforward. All I needed was the data that
+# had the binded rows.
+
+proppredplot <- ggplot(proppred, aes(x = Year, y = PropertyCrimeRt)) +
+  geom_line() +
+  labs(
+    title = "Predicted Property Crime Rate Over Time",
+    subtitle = "2019 through 2023 Predicted",
+    caption = "The rate is number of crimes per 1,000 people.
+       Vertical line denotes start of predicted data."
+  ) +
+  ylab("Property Crime Rate") +
+  theme_minimal() +
+  geom_vline(xintercept = 2019, color = "blue") +
+  scale_x_continuous(breaks = c(
+    2011,
+    2013,
+    2015,
+    2017,
+    2019,
+    2021,
+    2023
+  ))
+# I added some aesthetic elements here, inlcuding a blue line
+# so you can where my predicted data begins.
+
+# The original plot had a weird default setting for which years
+# it displayed on the x acis. I used scale_x_continous here
+# to dictate which years I thought it should display.
+```
+
+```{r saving the plot of my predicted values for 2019 through 2023}
+png("proppredplot.png", width = 576, height = 576, res = 120)
+proppredplot
+dev.off()
+
+file_copy(
+  path = "proppredplot.png",
+  new_path = "pdx-probs/www/proppredplot.png",
+  overwrite = TRUE
+)
+
+file_delete(path = "proppredplot.png")
+
+# If your images aren't displaying the right image, make sure
+# you rerun the code chunk with the corresponding ggplot function.
+
+# Note to self: any further changes made to these plots should
+# be made in this rmd and not the original R script file.
 ```
 

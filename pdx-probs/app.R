@@ -72,9 +72,16 @@ ui <- fluidPage(
         tabPanel(
           "Crime Rate Over Time",
           h3("Person and Property Crime Rates Over Time, Plus Predictions for 2019 through 2023"),
-          imageOutput(outputId = "persplot"),
-          imageOutput(outputId = "propplot"),
-          imageOutput(outputId = "proppredplot")
+          br(),
+          img(src = "propplot.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+          br(),
+          br(),
+          img(src = "persplot.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+          br(),
+          br(),
+          img(src = "proppredplot.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+          br(),
+          br()
         ),
         tabPanel(
           "Crimes Per Month",
@@ -122,24 +129,6 @@ server <- function(input, output) {
       labs(caption = "test") +
       theme_minimal()
   })
-  output$persplot <- renderImage({
-    list(
-      src = "persplot.png",
-      contentType = "image/gif"
-    )
-  }, deleteFile = FALSE)
-  output$propplot <- renderImage({
-    list(
-      src = "propplot.png",
-      contentType = "image/gif"
-    )
-  }, deleteFile = FALSE)
-  output$proppredplot <- renderImage({
-    list(
-      src = "proppredplot.png",
-      contentType = "image/gif"
-    )
-  }, deleteFile = FALSE)
   output$plotmonths15 <- renderImage({
     list(
       src = "plotmonths15.png",
