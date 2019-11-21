@@ -6,25 +6,175 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
+library(fs)
+library(scales)
+library(lubridate)
+library(tidyverse)
 ```
 
-## R Markdown
+### R Markdown for Differing Crime Rates Plotted Over Time and Precitions
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r reading in data for 2015 crime}
+# I do more or less the same thing across multiple Rmd files,
+# but I call the data something different every time. I'm not
+# entirely should how the environment in R Studio works for
+# saved objects. I don't know if you save data as an object
+# in R for use in one Rmd that you will be able to call the
+# same object in another Rmd. I always read them into new
+# objects and name them something different.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+months15 <- read_csv(file = "cleaned-data/CrimeData-2015.csv", col_types = cols(
+  Address = col_character(),
+  CaseNumber = col_character(),
+  CrimeAgainst = col_character(),
+  Neighborhood = col_character(),
+  OccurDate = col_character(),
+  OccurTime = col_character(),
+  OffenseCategory = col_character(),
+  OffenseType = col_character(),
+  OpenDataLat = col_double(),
+  OpenDataLon = col_double(),
+  OpenDataX = col_character(),
+  OpenDataY = col_character(),
+  ReportDate = col_character(),
+  OffenseCount = col_double()
+))
 ```
 
-## Including Plots
+```{r modifying the date columns with lubridate}
+# Lubridate is a helpful package that we have been
+# using as a class for a while now. It can be hard
+# to use at first, but if you google "lubridate
+# cheat sheet", the first thing that comes up is
+# a PDF that is incredibly helpful.
 
-You can also embed plots, for example:
+months15 <- months15 %>%
+  mutate(OccurDate = mdy(OccurDate)) %>%
+  mutate(ReportDate = mdy(ReportDate))
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+# Here I modify the columns for both the Occur Date
+# and Report Date, even though I only work with Occur
+# Date moving forward. I did this for consistency's
+# sake, though this is somewhat unnecessary.
+
+months15 <- months15 %>%
+  mutate(OccurYear = year(OccurDate)) %>%
+  mutate(OccurMonth = month(OccurDate))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r creating plot data for 2015 crime grouped by month}
+# You should note that the crime data file for 2015
+# contains crimes that were reported in 2015, but
+# didn't actually occur that year. Here I filter
+# for only cases in which crime occured in 2015.
+
+monthspread15 <- months15 %>%
+  filter(OccurYear == 2015) %>%
+  group_by(OccurMonth) %>%
+  count()
+
+# I group by month and count them so that I can plot
+# them below.
+```
+
+```{r plotting 2015 crime count by month}
+plotmonths15 <- ggplot(monthspread15, aes(x = OccurMonth, y = n)) +
+  geom_line() +
+  theme_minimal() +
+  labs(
+    title = "Number of Total Crimes Over Months in 2015",
+    subtitle = "Significantly lower numbers in early months"
+  ) +
+  xlab("Month") +
+  ylab("Number of Crimes Reported") +
+  scale_y_continuous(limits = c(0, NA), labels = comma) +
+  scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12))
+
+# To get commas in the y axis labels, load the scales
+# package and put labels = comma in scale_y_continuous.
+# It's magic.
+
+# Note to self: do not keep lm line in these plots.
+```
+
+```{r saving the plot of 2015 crime count by month}
+# The image seemed a little smooshed together after I
+# checked it out in Previewer, so I altered the width
+# here to be 606 instead of my standard 576.
+
+png("plotmonths15.png", width = 606, height = 576, res = 120)
+plotmonths15
+dev.off()
+
+file_copy(
+  path = "plotmonths15.png",
+  new_path = "pdx-probs/www/plotmonths15.png",
+  overwrite = TRUE
+)
+
+file_delete(path = "plotmonths15.png")
+```
+
+```{r 2016 monthly crime count plot and image}
+# The rest of this file is just a lot of copying and pasting
+# the basic structure I've laid out above, but adjusting
+# for which year (and therefore data file) you are looking
+# at.
+
+months16 <- read_csv(file = "cleaned-data/CrimeData-2016.csv", col_types = cols(
+  Address = col_character(),
+  CaseNumber = col_character(),
+  CrimeAgainst = col_character(),
+  Neighborhood = col_character(),
+  OccurDate = col_character(),
+  OccurTime = col_character(),
+  OffenseCategory = col_character(),
+  OffenseType = col_character(),
+  OpenDataLat = col_double(),
+  OpenDataLon = col_double(),
+  OpenDataX = col_character(),
+  OpenDataY = col_character(),
+  ReportDate = col_character(),
+  OffenseCount = col_double()
+))
+
+months16 <- months16 %>%
+  mutate(OccurDate = mdy(OccurDate)) %>%
+  mutate(ReportDate = mdy(ReportDate))
+
+months16 <- months16 %>%
+  mutate(OccurYear = year(OccurDate)) %>%
+  mutate(OccurMonth = month(OccurDate))
+
+monthspread16 <- months16 %>%
+  filter(OccurYear == 2016) %>%
+  group_by(OccurMonth) %>%
+  count()
+
+plotmonths16 <- ggplot(monthspread16, aes(x = OccurMonth, y = n)) +
+  geom_line() +
+  theme_minimal() +
+  labs(
+    title = "Number of Total Crimes Over Months in 2016",
+    subtitle = "General increase over time with significant dropoff in December",
+    caption = "2016 graph scaled on y axis to show dynamism."
+  ) +
+  xlab("Month") +
+  ylab("Number of Crimes Reported") +
+  scale_y_continuous(labels = comma) +
+  scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12))
+
+png("plotmonths16.png", width = 606, height = 576, res = 120)
+plotmonths16
+dev.off()
+
+file_copy(
+  path = "plotmonths16.png",
+  new_path = "pdx-probs/www/plotmonths16.png",
+  overwrite = TRUE
+)
+
+file_delete(path = "plotmonths16.png")
+```
+
