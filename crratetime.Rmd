@@ -84,15 +84,24 @@ persplot <- ggplot(custom, aes(x = Year, y = PersonCrmRt)) +
        subtitle = "Slight Increase Over Time",
        caption = "The rate is number of crimes per 1,000 people.") +
   ylab("Person Crime Rate") +
-  theme_minimal() +
-  geom_smooth(method = "lm", se = FALSE)
+  theme_minimal()
 
-ggsave(filename = "persplot.png", plot = persplot, device = png())
+# This plot does not have an lm fit to it.
+
+png("persplot.png", width = 576, height = 576, res = 120)
+persplot
+dev.off()
 
 file_copy(
   path = "persplot.png",
-  new_path = "pdx-probs/persplot.png",
+  new_path = "pdx-probs/www/persplot.png",
   overwrite = TRUE
 )
+
+file_delete(path = "persplot.png")
+```
+
+```{r}
+
 ```
 
