@@ -206,7 +206,21 @@ ui <- fluidPage(
         ),
         tabPanel(
           "Unemployment",
-          h3("Unemployment and Crime Rate Over Time")
+          h3("Unemployment and Crime Rate Over Time"),
+          br(),
+          img(src = "unempplot.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+          br(),
+          br(),
+          img(src = "unemppropcrime.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+          br(),
+          br(),
+          img(src = "unempperscrime.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+          
+          # Don't forget the .png suffices here or your images won't
+          # load!
+          
+          br(),
+          br()
         )
       )
     ),
