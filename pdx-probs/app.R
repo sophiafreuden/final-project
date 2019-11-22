@@ -215,10 +215,10 @@ ui <- fluidPage(
           br(),
           br(),
           img(src = "unempperscrime.png", style = "display: block; margin-left: auto; margin-right: auto;"),
-          
+
           # Don't forget the .png suffices here or your images won't
           # load!
-          
+
           br(),
           br()
         )
@@ -230,7 +230,6 @@ ui <- fluidPage(
       br(),
       h4("Understanding how changes in population and unemployment may affect crime rates in
          Portland, Oregon."),
-      br(),
       br(),
       "I am interested in examing the relationship between population growth, crime rates,
       and unemployment rates in Portland, Oregon. The city has undergone some of the most
@@ -244,7 +243,52 @@ ui <- fluidPage(
       br(),
       h4("About the Data"),
       br(),
-      br()
+      "I am using yearly crime data files from the",
+      
+      # It took a couple tries to get this hyperlink code right. I found
+      # the base of the code from another project. The trick is to put
+      # in the http://www. part of the url, otherwise the app tries
+      # to find the file in a local directory.
+      
+      a("Portland Police Bureau", href = "https://www.portlandoregon.gov/police/71978"),
+      "as well as their",
+      a("crime rate estimates", href = "https://www.portlandoregon.gov/police/article/739634"),
+      "current as of August 12, 2019.",
+      br(),
+      br(),
+      "I am also using population estimates from the",
+      a("U.S. Census.", href = "https://factfinder.census.gov/faces/nav/jsf/pages/index.xhtml"),
+      br(),
+      br(),
+      "Lastly, I am using unemployment rate data from the",
+      
+      # I'm not really sure what to do about this ridiculously long hyperlink.
+      # I tried breaking it up into chunks and it broke the link in the app.
+      
+      a("U.S. Bureau of Labor Statistics", href = "https://data.bls.gov/timeseries/LAUMT413890000000003?amp%253bdata_tool=XGtable&output_view=data&include_graphs=truehttps://data.bls.gov/pdq/SurveyOutputServlet"),
+      br(),
+      br(),
+      h4("About Me"),
+      br(),
+      "I am a first-year graduate student in Harvard University's master's
+      program for Regional Studies: Russia, Eastern Europe, and Central Asia.
+      Prior to starting my graduate studies, I worked in criminal defense in
+      Portland, Oregon and haven taken an interest in how rapidly the city
+      has changed in recent years--and what that means for residents.",
+      br(),
+      br(),
+      "You can follow me on Twitter",
+      a("here.", href = "http://www.twitter.com/sophiafreuden"),
+      br(),
+      br(),
+      "You can also find me on LinkedIn",
+      a("here.", href = "https://www.linkedin.com/in/sophiafreuden"),
+      br(),
+      br(),
+      h4("GitHub Repository"),
+      br(),
+      "You can find my public GitHub repo for this project",
+      a("here.", href = "https://github.com/sophiafreuden/pdx-probs")
     )
   )
 )
@@ -264,7 +308,7 @@ server <- function(input, output) {
     # there are a couple parts in the ui that seem like they should
     # go here, but they don't. The only thing that goes down here
     # is the inputID, and then the output$victimbar goes above.
-    
+
     # Per Georgie's suggestion, I reordered the bars in this
     # interactive graph. I knew how to do it because I had already
     # reordered all the bars in my crimeagimg.Rmd, but I had to
@@ -275,61 +319,64 @@ server <- function(input, output) {
     # identify which name I had made a typo in and fix it.
 
     crime18$OffenseType <- factor(crime18$OffenseType,
-                                  levels = c("Theft From Motor Vehicle",
-                                             "All Other Larceny",
-                                             "Motor Vehicle Theft",
-                                             "Vandalism",
-                                             "Burglary",
-                                             "Shoplifting",
-                                             "Identity Theft",
-                                             "Theft From Building",
-                                             "False Pretenses/Swindle/Confidence Game",
-                                             "Theft of Motor Vehicle Parts or Accessories",
-                                             "Robbery",
-                                             "Counterfeiting/Forgery",
-                                             "Credit Card/ATM Fraud",
-                                             "Arson",
-                                             "Embezzlement",
-                                             "Purse-Snatching",
-                                             "Pocket-Picking",
-                                             "Hacking/Computer Invasion",
-                                             "Stolen Property Offenses",
-                                             "Impersonation",
-                                             "Theft From Coin-Operated Machine or Device",
-                                             "Extortion/Blackmail",
-                                             "Wire Fraud",
-                                             "Bribery",
-                                             "Welfare Fraud",
-                                             "Simple Assault",
-                                             "Aggravated Assault",
-                                             "Intimidation",
-                                             "Rape",
-                                             "Fondling",
-                                             "Sodomy",
-                                             "Kidnapping/Abduction",
-                                             "Sexual Assault With An Object",
-                                             "Murder and Non-negligent Manslaughter",
-                                             "Statutory Rape",
-                                             "Commercial Sex Acts",
-                                             "Involuntary Servitude",
-                                             "Incest",
-                                             "Drug/Narcotic Violations",
-                                             "Weapons Law Violations",
-                                             "Purchasing Prostitution",
-                                             "Prostitution",
-                                             "Pornography/Obscene Material",
-                                             "Animal Cruelty",
-                                             "Assisting or Promoting Prostitution",
-                                             "Drug Equipment Violations",
-                                             "Operating/Promoting/Assisting Gambling"))
-    
+      levels = c(
+        "Theft From Motor Vehicle",
+        "All Other Larceny",
+        "Motor Vehicle Theft",
+        "Vandalism",
+        "Burglary",
+        "Shoplifting",
+        "Identity Theft",
+        "Theft From Building",
+        "False Pretenses/Swindle/Confidence Game",
+        "Theft of Motor Vehicle Parts or Accessories",
+        "Robbery",
+        "Counterfeiting/Forgery",
+        "Credit Card/ATM Fraud",
+        "Arson",
+        "Embezzlement",
+        "Purse-Snatching",
+        "Pocket-Picking",
+        "Hacking/Computer Invasion",
+        "Stolen Property Offenses",
+        "Impersonation",
+        "Theft From Coin-Operated Machine or Device",
+        "Extortion/Blackmail",
+        "Wire Fraud",
+        "Bribery",
+        "Welfare Fraud",
+        "Simple Assault",
+        "Aggravated Assault",
+        "Intimidation",
+        "Rape",
+        "Fondling",
+        "Sodomy",
+        "Kidnapping/Abduction",
+        "Sexual Assault With An Object",
+        "Murder and Non-negligent Manslaughter",
+        "Statutory Rape",
+        "Commercial Sex Acts",
+        "Involuntary Servitude",
+        "Incest",
+        "Drug/Narcotic Violations",
+        "Weapons Law Violations",
+        "Purchasing Prostitution",
+        "Prostitution",
+        "Pornography/Obscene Material",
+        "Animal Cruelty",
+        "Assisting or Promoting Prostitution",
+        "Drug Equipment Violations",
+        "Operating/Promoting/Assisting Gambling"
+      )
+    )
+
     crime18 %>%
       filter(CrimeAgainst == input$victim) %>%
       ggplot(aes(x = OffenseType, fill = OffenseType)) +
       geom_bar(show.legend = FALSE) +
       coord_flip() +
       scale_y_log10(label = comma) +
-      
+
       # I wanted to add commas to the numbers in this graph
       # and originally tried by adding scale_y_continous
       # with a label argument fed into it, but I forgot
@@ -337,10 +384,12 @@ server <- function(input, output) {
       # made it look all weird--I'm honestly surprised it
       # didn't totally break my code. I then moved the
       # label argument into scale_y_log10.
-      
+
       ylab("Count") +
-      labs(title = "Display of Offense Type by Victim Type",
-           caption = "Scaled on x axis.") +
+      labs(
+        title = "Display of Offense Type by Victim Type",
+        caption = "Scaled on x axis."
+      ) +
       theme_minimal()
   })
 
@@ -350,7 +399,6 @@ server <- function(input, output) {
   # I don't have a lot going on in the server. I might add more
   # graphics later and potentially add another interactive
   # graphic or two, but this is good for right now.
-  
 }
 
 shinyApp(ui = ui, server = server)
