@@ -6,25 +6,149 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
+library(fs)
+library(scales)
+library(tidyverse)
 ```
 
-## R Markdown
+### R Markdown for Population Growth Plots and Predictions
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+<br>
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+#### These plots are rendered as images and saved to a directory within my app that then renders them in Shiny.  
 
-```{r cars}
-summary(cars)
+<br>
+
+*Please see the readme file for specific instructions on how to run these codes chunks (i.e. what order to run them in).*  
+
+```{r reading in the census population data}
+pop <- read_csv("cleaned-data/2010-2018 census pop estimates.csv", col_types = cols(
+  Year = col_double(),
+  PopulationCen = col_double()
+))
+
+# I set the col_types to the above setting after it gave me
+# a message when I ran it without that setting the first
+# time.
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r plotting population growth over time}
+popplot <- ggplot(pop, aes(x = Year, y = PopulationCen)) +
+  geom_line() +
+  ylab("Population") +
+  labs(
+    title = "Population of Portland Metropolitan Area
+    from 2010 to 2018",
+    subtitle = "Dyanmic growth in past decade or so.",
+    caption = "Scaled on y axis to show dynamism."
+  ) +
+  theme_minimal() +
+  scale_y_continuous(labels = comma)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r saving the population growth plot as an image, include=FALSE}
+# I'm not sure if these Rmd files need to knit nicely as
+# a part of this assignment. I tried knitting one and it
+# worked, but I was getting weird messages in the knit
+# as a result of my image-saving code. I set include=FALSE
+# in all code chunks in all Rmd files that had this image
+# saving code. I also created a redunant code chunk at the
+# end that has the plots of each of the files in them
+# so that the visual would show up in a knit.
+
+png("popplot.png", width = 576, height = 576, res = 120)
+popplot
+dev.off()
+
+file_copy(
+  path = "popplot.png",
+  new_path = "pdx-probs/www/popplot.png",
+  overwrite = TRUE
+)
+
+file_delete(path = "popplot.png")
+
+# Prior to this, I had been using ggsave in a similar way. Bernadette
+# said she found the method below online because she was having similar
+# issues with getting her images to load properly. Because this method
+# doesn't employ pipes, having it split into "runnable" code chunks
+# in an Rmd made more sense than leaving it in its origianl R script.
+```
+
+```{r plotting and rendering unscaled population growth over time, include=FALSE}
+popplot2 <- ggplot(pop, aes(x = Year, y = PopulationCen)) +
+  geom_line() +
+  ylab("Population") +
+  labs(
+    title = "Population of Portland Metropolitan Area
+    from 2010 to 2018",
+    caption = "This version is not scaled on the y axis."
+  ) +
+  scale_y_continuous(limits = c(0, NA)) +
+  theme_minimal()
+
+png("popplot2.png", width = 576, height = 576, res = 120)
+popplot2
+dev.off()
+
+file_copy(
+  path = "popplot2.png",
+  new_path = "pdx-probs/www/popplot2.png",
+  overwrite = TRUE
+)
+
+file_delete(path = "popplot2.png")
+```
+
+```{r predicting population growth}
+# Because I had already done something very similar for predicting
+# property crime rates in the future, I copied a that code and
+# pasted it here, making tweaks where needed.
+
+popmodel <- lm(formula = PopulationCen ~ Year, data = pop)
+
+popfuture <- tibble(Year = c(2019, 2020, 2021, 2022, 2023))
+
+predict(popmodel, newdata = popfuture)
+
+poprows <- tibble(
+  PopulationCen = predict(popmodel, newdata = popfuture),
+  Year = c(2019, 2020, 2021, 2022, 2023)
+)
+
+poprows <- poprows %>%
+  mutate(PopulationCen = round(PopulationCen, digits = 0))
+
+poppred <- pop %>% bind_rows(poprows)
+```
+
+```{r}
+poppredplot <- ggplot(poppred, aes(x = Year, y = PopulationCen)) +
+  geom_line() +
+  labs(
+    title = "Predicted Population Change Over Time",
+    subtitle = "2019 through 2023 Predicted",
+    caption = "Scaled on y axis to show dynamism.
+    Vertical line denotes start of predicted data."
+  ) +
+  ylab("Population") +
+  theme_minimal() +
+  geom_vline(xintercept = 2019, color = "blue") +
+  scale_y_continuous(labels = comma)
+
+png("poppredplot.png", width = 576, height = 576, res = 120)
+poppredplot
+dev.off()
+
+file_copy(
+  path = "poppredplot.png",
+  new_path = "pdx-probs/www/poppredplot.png",
+  overwrite = TRUE
+)
+
+file_delete(path = "poppredplot.png")
+
+# Don't forget all the .png suffices here!
+```
+
