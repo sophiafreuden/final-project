@@ -285,6 +285,9 @@ file_delete(path = "crimeag19.png")
 ```
 
 ```{r}
+# I include these plots here for the knit, but they don't correspond
+# to anything in Shiny.
+
 crimeag15
 crimeag16
 crimeag17
