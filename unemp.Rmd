@@ -6,25 +6,74 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
+library(fs)
+library(readxl)
+library(tidyverse)
 ```
 
-## R Markdown
+### R Markdown for Unemployment Plots and Regressions with Crime Rates
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+<br>
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+#### These plots are rendered as images and saved to a directory within my app that then renders them in Shiny.  
 
-```{r cars}
-summary(cars)
+<br>
+
+*Please see the readme file for specific instructions on how to run these codes chunks (i.e. what order to run them in).*  
+
+```{r reading in unemployment data}
+# I do more or less the same thing across multiple Rmd files,
+# but I call the data something different every time. I'm not
+# entirely should how the environment in R Studio works for
+# saved objects. I don't know if you save data as an object
+# in R for use in one Rmd that you will be able to call the
+# same object in another Rmd. I always read them into new
+# objects and name them something different.
+
+unemp <- read_xlsx(path = "cleaned-data/BLS PDX Unemployment.xlsx")
 ```
 
-## Including Plots
+```{r adding yearly average unemployment rate column}
+# I originally added this in Excel by hand, but I decided that
+# mutating a new column in R would be both cooler and perhaps
+# more ethical... plus it spares me from having to explain
+# what I did in the readme.
 
-You can also embed plots, for example:
+unemp$Avg <- rowMeans(unemp[, 2:13], na.rm = TRUE)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+# T
+
+# With digits = 1 below, I rounded this average to match
+# the rounding of the original data.
+
+unemp <- unemp %>% mutate(Avg = round(Avg, digits = 1))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r plotting yearly average unemployment rate over time}
+unempplot <- ggplot(unemp, aes(x = Year, y = Avg)) +
+  geom_line() +
+  labs(
+    title = "Unemployment Rate of Portland Metropolitan Area Over Time",
+    subtitle = "Post-Recession Era Sees Plummet in Unemployment Rate",
+    caption = "Thanks, Obama."
+  ) +
+  theme_minimal() +
+  scale_x_continuous(breaks = c(2010, 2012, 2014, 2016, 2018)) +
+  ylab("Yearly Average Unemployment Rate")
+```
+
+```{r saving unemployment plot as an image, include=FALSE}
+png("unempplot.png", width = 576, height = 576, res = 120)
+unempplot
+dev.off()
+
+file_copy(
+  path = "unempplot.png",
+  new_path = "pdx-probs/www/unempplot.png",
+  overwrite = TRUE
+)
+
+file_delete(path = "unempplot.png")
+```
+
