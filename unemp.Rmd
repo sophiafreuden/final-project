@@ -28,8 +28,9 @@ library(tidyverse)
 # entirely should how the environment in R Studio works for
 # saved objects. I don't know if you save data as an object
 # in R for use in one Rmd that you will be able to call the
-# same object in another Rmd. I always read them into new
-# objects and name them something different.
+# same object in another Rmd (I'm pretty sure you can't).
+# I always read them into new objects and name them something
+# different.
 
 unemp <- read_xlsx(path = "cleaned-data/BLS PDX Unemployment.xlsx")
 ```
@@ -42,7 +43,12 @@ unemp <- read_xlsx(path = "cleaned-data/BLS PDX Unemployment.xlsx")
 
 unemp$Avg <- rowMeans(unemp[, 2:13], na.rm = TRUE)
 
-# T
+# This took me a little bit to figure out. Averaging across
+# rows does not work like using mean() in mutate, because
+# that applies a function down a column. Knowing a bit of
+# base R is helpful at times! I had to include na.rm =
+# TRUE because I don't have data points for 3 months in
+# 2019.
 
 # With digits = 1 below, I rounded this average to match
 # the rounding of the original data.
@@ -61,6 +67,8 @@ unempplot <- ggplot(unemp, aes(x = Year, y = Avg)) +
   theme_minimal() +
   scale_x_continuous(breaks = c(2010, 2012, 2014, 2016, 2018)) +
   ylab("Yearly Average Unemployment Rate")
+
+# Forgive my political posturing, I couldn't help it.
 ```
 
 ```{r saving unemployment plot as an image, include=FALSE}
