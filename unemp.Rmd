@@ -8,6 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(fs)
+library(scales)
 library(readxl)
 library(tidyverse)
 ```
@@ -21,6 +22,8 @@ library(tidyverse)
 <br>
 
 *Please see the readme file for specific instructions on how to run these codes chunks (i.e. what order to run them in).*  
+
+<br>
 
 ```{r reading in unemployment data}
 # I do more or less the same thing across multiple Rmd files,
@@ -60,8 +63,13 @@ unemp <- unemp %>% mutate(Avg = round(Avg, digits = 1))
 unempplot <- ggplot(unemp, aes(x = Year, y = Avg)) +
   geom_line() +
   labs(
-    title = "Unemployment Rate of Portland Metropolitan Area Over Time",
-    subtitle = "Post-Recession Era Sees Plummet in Unemployment Rate",
+    title = "Unemployment Rate of Portland Metropolitan Area
+    Over Time",
+
+    # I've had to break titles like this in a couple of my graphs
+    # otherwise they get cut off in the images that render.
+
+    subtitle = "Post-recession era sees plummet in unemployment rate",
     caption = "Thanks, Obama."
   ) +
   theme_minimal() +
@@ -72,6 +80,15 @@ unempplot <- ggplot(unemp, aes(x = Year, y = Avg)) +
 ```
 
 ```{r saving unemployment plot as an image, include=FALSE}
+# I'm not sure if these Rmd files need to knit nicely as
+# a part of this assignment. I tried knitting one and it
+# worked, but I was getting weird messages in the knit
+# as a result of my image-saving code. I set include=FALSE
+# in all code chunks in all Rmd files that had this image
+# saving code. I also created a redunant code chunk at the
+# end that has the plots of each of the files in them
+# so that the visual would show up in a knit.
+
 png("unempplot.png", width = 576, height = 576, res = 120)
 unempplot
 dev.off()
@@ -83,5 +100,126 @@ file_copy(
 )
 
 file_delete(path = "unempplot.png")
+
+# Make sure all the file names include .png at the end!
+```
+
+```{r reading in crime rate and population data}
+# This reads in the data table I made by hand using data
+# from the Portland Police Bureau and the U.S. Census.
+
+custom2 <- read_xlsx(path = "cleaned-data/Crime Rate + Pop.xlsx")
+```
+
+```{r narrowing down crime rate data and joining with unemployment data}
+# In general, I usually save over old objects while cleaning
+# them or modifying them in some way. It may be a safer
+# practice to name them something new every time, but because
+# I'm working with a ton of data and in multiple Rmd and R
+# script files, I tend to save over them.
+
+custom2 <- custom2 %>%
+  select(Year, PropertyCrimeRt, PersonCrmRt)
+
+# The line above selects the columns out of custom2 that I
+# need to join with the unemployment data I already have
+# loaded in at the beginning of this Rmd.
+
+# I suppose I could have further cleaned unemp for usage
+# in unempcrime below by only keeping the Avg and Year
+# columns. I didn't, because I may use all of the monthly
+# values in unempcrime for another visualization later.
+# I thought I would at least make a note to myself about
+# this later.
+
+unempcrime <- inner_join(unemp, custom2, by = "Year")
+
+# This is an inner join that joins the data in unemp and
+# custom together by year. Inner joins keep all data
+# present in both tibbles, whereas right and left
+# joins only keep some of the data in either of the
+# tibbles. Look up tidyr and its cheatsheat if you're
+# confused on how joins work and when you should use
+# which join function.
+```
+
+```{r plotting property crime rate against yearly average unemployment rate}
+unemppropcrime <- ggplot(unempcrime, aes(x = Avg, y = PropertyCrimeRt)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(
+    title = "Yearly Property Crime Rate and Yearly Average
+    Unemployment Rate",
+
+    # Note the title break here again.
+
+    subtitle = "Inverse Relationship between Crime Rate and
+    Unemployment Rate",
+
+    # I also had to break the subtitle.
+
+    caption = "Property crime rate is the number of property crimes reported per 1,000 people."
+  ) +
+  theme_minimal() +
+  ylab("Property Crime Rate") +
+  xlab("Yearly Average Unemployment Rate")
+
+# I did try modifying the font size in my graphs, but it was
+# even uglier than having the titles split as they are. this
+# will have to do.
+```
+
+
+```{r saving unemppropcrime as an image, include=FALSE}
+png("unemppropcrime.png", width = 576, height = 576, res = 120)
+unemppropcrime
+dev.off()
+
+file_copy(
+  path = "unemppropcrime.png",
+  new_path = "pdx-probs/www/unemppropcrime.png",
+  overwrite = TRUE
+)
+
+file_delete(path = "unemppropcrime.png")
+```
+
+```{r plotting person crime rate against yearly average unemployment rate}
+# This is the same thing as the above ggplot, but I changed which
+# crime rate I was plotting.
+
+unempperscrime <- ggplot(unempcrime, aes(x = Avg, y = PersonCrmRt)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(
+    title = "Yearly Person Crime Rate and Yearly Average
+    Unemployment Rate",
+    subtitle = "No Clear Relationship Between Person Crime Rate and
+    Unemployment Rate",
+    caption = "Property crime rate is the number of property crimes reported per 1,000 people."
+  ) +
+  theme_minimal() +
+  ylab("Property Crime Rate") +
+  xlab("Yearly Average Unemployment Rate")
+```
+
+```{r saving unempperscrime as an image, include=FALSE}
+png("unempperscrime.png", width = 576, height = 576, res = 120)
+unempperscrime
+dev.off()
+
+file_copy(
+  path = "unempperscrime.png",
+  new_path = "pdx-probs/www/unempperscrime.png",
+  overwrite = TRUE
+)
+
+file_delete(path = "unempperscrime.png")
+```
+
+```{r}
+unempplot
+unemppropcrime
+unempperscrime
 ```
 
