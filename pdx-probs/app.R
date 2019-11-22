@@ -226,8 +226,25 @@ ui <- fluidPage(
     ),
     tabPanel(
       "About",
-      h3("This is my about page placeholder."),
-      img(src = "crimeag15.png")
+      h3("Growing Pains in Portland: A Story of Crime, Unemployment, and Population"),
+      br(),
+      h4("Understanding how changes in population and unemployment may affect crime rates in
+         Portland, Oregon."),
+      br(),
+      br(),
+      "I am interested in examing the relationship between population growth, crime rates,
+      and unemployment rates in Portland, Oregon. The city has undergone some of the most
+      rapid changes of any U.S. city in recent years and has quickly become a favored
+      destination for young people in particular. I am a Portland native and have noticed
+      how much the city has visibly changed in recent years. Neighborhoods that were once
+      avoided due to concerns about safety are now the trendiest shopping and dining districts
+      in the city. I hope to better understand how changes in the economy and composition
+      of the city may have impacted what kinds of crimes are commited and at what rates.",
+      br(),
+      br(),
+      h4("About the Data"),
+      br(),
+      br()
     )
   )
 )
@@ -247,15 +264,83 @@ server <- function(input, output) {
     # there are a couple parts in the ui that seem like they should
     # go here, but they don't. The only thing that goes down here
     # is the inputID, and then the output$victimbar goes above.
+    
+    # Per Georgie's suggestion, I reordered the bars in this
+    # interactive graph. I knew how to do it because I had already
+    # reordered all the bars in my crimeagimg.Rmd, but I had to
+    # type all these crime names in by hand. I made typos in only
+    # two of them. It was actually nice; instead of totally breaking
+    # my app, the two columns just showed up with a "NA" name, but
+    # they retained their original count. That way I could easily
+    # identify which name I had made a typo in and fix it.
 
+    crime18$OffenseType <- factor(crime18$OffenseType,
+                                  levels = c("Theft From Motor Vehicle",
+                                             "All Other Larceny",
+                                             "Motor Vehicle Theft",
+                                             "Vandalism",
+                                             "Burglary",
+                                             "Shoplifting",
+                                             "Identity Theft",
+                                             "Theft From Building",
+                                             "False Pretenses/Swindle/Confidence Game",
+                                             "Theft of Motor Vehicle Parts or Accessories",
+                                             "Robbery",
+                                             "Counterfeiting/Forgery",
+                                             "Credit Card/ATM Fraud",
+                                             "Arson",
+                                             "Embezzlement",
+                                             "Purse-Snatching",
+                                             "Pocket-Picking",
+                                             "Hacking/Computer Invasion",
+                                             "Stolen Property Offenses",
+                                             "Impersonation",
+                                             "Theft From Coin-Operated Machine or Device",
+                                             "Extortion/Blackmail",
+                                             "Wire Fraud",
+                                             "Bribery",
+                                             "Welfare Fraud",
+                                             "Simple Assault",
+                                             "Aggravated Assault",
+                                             "Intimidation",
+                                             "Rape",
+                                             "Fondling",
+                                             "Sodomy",
+                                             "Kidnapping/Abduction",
+                                             "Sexual Assault With An Object",
+                                             "Murder and Non-negligent Manslaughter",
+                                             "Statutory Rape",
+                                             "Commercial Sex Acts",
+                                             "Involuntary Servitude",
+                                             "Incest",
+                                             "Drug/Narcotic Violations",
+                                             "Weapons Law Violations",
+                                             "Purchasing Prostitution",
+                                             "Prostitution",
+                                             "Pornography/Obscene Material",
+                                             "Animal Cruelty",
+                                             "Assisting or Promoting Prostitution",
+                                             "Drug Equipment Violations",
+                                             "Operating/Promoting/Assisting Gambling"))
+    
     crime18 %>%
       filter(CrimeAgainst == input$victim) %>%
       ggplot(aes(x = OffenseType, fill = OffenseType)) +
       geom_bar(show.legend = FALSE) +
       coord_flip() +
-      scale_y_log10() +
+      scale_y_log10(label = comma) +
+      
+      # I wanted to add commas to the numbers in this graph
+      # and originally tried by adding scale_y_continous
+      # with a label argument fed into it, but I forgot
+      # I had already scaled the y axis on log10. That
+      # made it look all weird--I'm honestly surprised it
+      # didn't totally break my code. I then moved the
+      # label argument into scale_y_log10.
+      
       ylab("Count") +
-      labs(title = "Display of Offense Type by Victim Type") +
+      labs(title = "Display of Offense Type by Victim Type",
+           caption = "Scaled on x axis.") +
       theme_minimal()
   })
 
