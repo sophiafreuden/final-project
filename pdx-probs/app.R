@@ -61,27 +61,26 @@ ui <- fluidPage(
     "Growing Pains in Portland: A Story of Crime, Unemployment, and Population",
     tabPanel(
       "The Data",
-      
+
       # tabsetPanel makes tabs within tabs. I referred to the
       # source code in other projects to see how this was done.
       # I also found a very helpful Shiny cheatsheet online
       # that I initially referred to heavily to make these tabs.
-      
+
       tabsetPanel(
         tabPanel(
           "Victims in 2018",
           h3("Crime in 2018 by Victim Type"),
           br(),
-          
+
           # I chose to go with sidebarPanel below so I would have my
           # graph on one side and a description to its side.
-          
+
           sidebarPanel(
             selectInput(
-              
+
               # This graph was originally rendering on multiple tabs.
               # That's because I had a comma in the wrong place.
-              
               inputId = "victim",
               "Victim type:", choices = c("Person", "Society", "Property")
             ),
@@ -97,48 +96,48 @@ ui <- fluidPage(
           "Victim Distribution",
           h3("Distribution of Crimes per Victim Type from 2015 to 2019"),
           br(),
-          
+
           # Vertical layout didn't seem to change anything? I won't delete
           # this for future reference, but perhaps there is something else
           # I need to add here to make it work.
-          
+
           verticalLayout(
             img(src = "crimeag15.png", style = "display: block; margin-left: auto; margin-right: auto;"),
             br(),
             br(),
-            
+
             # It took me a bit to figure out how many breaks I needed and where
             # they should go, but I think I have a good system figured out it.
-            
+
             img(src = "crimeag16.png", style = "display: block; margin-left: auto; margin-right: auto;"),
-            
+
             # The code in "style = " above centers the image. I found it online
             # after unsuccessfully trying other things.
-            
+
             br(),
             br(),
             img(src = "crimeag17.png", style = "display: block; margin-left: auto; margin-right: auto;"),
-            
+
             # Because most of my graphs were rendered as static images, most
             # of my Shiny app code is the same thing copied and pasted. The only
             # thing that changes is what image is selected in each line of code.
-            
+
             br(),
             br(),
             img(src = "crimeag18.png", style = "display: block; margin-left: auto; margin-right: auto;"),
-            
+
             # I originally trying rendering the images by loading them into
             # the server and then calling them here, but they kept loading
             # on top of each other and were huge.
-            
+
             br(),
             br(),
-            
+
             # Bernadette showed me a way of loading images here in the ui
             # that doesn't require anything in the server, which is nice.
-            
+
             img(src = "crimeag19.png", style = "display: block; margin-left: auto; margin-right: auto;"),
-            
+
             # The trick is to remember to create a directory in the app
             # called "www" that contains all your images. You will have
             # to save them there after creating them in the Rmd using
@@ -146,7 +145,7 @@ ui <- fluidPage(
             # this "www" directory, you don't mention that "www"
             # part here in the img(src = ... ). I don't know why it
             # works that way, it just does. Shiny is weird like that.
-            
+
             br(),
             br()
           )
@@ -155,9 +154,9 @@ ui <- fluidPage(
           "Crime Rate Over Time",
           h3("Person and Property Crime Rates Over Time, Plus Predictions for 2019 through 2023"),
           br(),
-          
+
           # Lots of copy and paste! I'm not joking.
-          
+
           img(src = "propplot.png", style = "display: block; margin-left: auto; margin-right: auto;"),
           br(),
           br(),
@@ -227,14 +226,14 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   output$victimbar <- renderPlot({
-    
+
     # Despite its simple appearance, this ggplot rendered in Shiny
     # took me some time to figure out. Getting the exact code in
     # the inputs and outputs is a bit tricky, especially because
     # there are a couple parts in the ui that seem like they should
     # go here, but they don't. The only thing that goes down here
     # is the inputID, and then the output$victimbar goes above.
-    
+
     crime18 %>%
       filter(CrimeAgainst == input$victim) %>%
       ggplot(aes(x = OffenseType, fill = OffenseType)) +
@@ -245,7 +244,7 @@ server <- function(input, output) {
       labs(title = "Display of Offense Type by Victim Type") +
       theme_minimal()
   })
-  
+
   # Because I am rendering most of my graphs as static images
   # due to the fact that my data file are massive and it would
   # take forever to load (and sometimes it would just break),
@@ -256,3 +255,5 @@ server <- function(input, output) {
 }
 
 shinyApp(ui = ui, server = server)
+
+# And that's it!

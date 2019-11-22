@@ -122,6 +122,8 @@ poprows <- tibble(
 poprows <- poprows %>%
   mutate(PopulationCen = round(PopulationCen, digits = 0))
 
+# digits = 0 rounds the population to have no decimals.
+
 poppred <- pop %>% bind_rows(poprows)
 ```
 
