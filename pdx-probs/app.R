@@ -355,4 +355,5 @@ server <- function(input, output) {
 
 shinyApp(ui = ui, server = server)
 
-# And that's it!
+# And that's it! I estimate that this app combined with all of the
+# Rmd and R script files total over 1,700 lines of code.
