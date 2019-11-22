@@ -48,6 +48,19 @@ a <- read_csv(file = "cleaned-data/CrimeData-2015.csv", col_types = cols(
 ))
 ```
 
+```{r reordering levels in CrimeAgainst column for bar reordering in ggplot}
+# I met with Georgie on Wednesday and she recommended that I
+# the bars in my bar graphs so the quantities would appear
+# in descending order.
+
+# I found the below code that allows me to do just that. I
+# use similar code in all five plots in this Rmd as well as
+# in the interactive bar graph I have in my App.
+
+a$CrimeAgainst <- factor(a$CrimeAgainst,levels = c("Property", "Person", "Society"))
+```
+
+
 ```{r 2015 crime against plot and image, include=FALSE}
 # I originally had all of the code in this Rmd in an R script file
 # that I had been using to build my project. Because of issues I
@@ -61,6 +74,12 @@ crimeag15 <- ggplot(a, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
   xlab("Type of Victim") +
   ylab("Count") +
   theme(legend.position = "none") +
+  
+  # I decided to add the commas in the y axis with
+  # scale_y_continuous after seeing how my numbers rendered in my
+  # images. Make sure you have the scales package loaded for this!
+  
+  scale_y_continuous(labels = comma) +
   theme_minimal()
 
 # Prior to this, I had been using ggsave in a similar way. Bernadette
@@ -111,6 +130,11 @@ b <- read_csv(file = "cleaned-data/CrimeData-2016.csv", col_types = cols(
   OffenseCount = col_double()
 ))
 
+b$CrimeAgainst <- factor(b$CrimeAgainst,levels = c("Property", "Person", "Society"))
+
+# The line above copies what I did for the 2015 crime data. It is
+# meant to reorder the bars in my bar graphs by descending quantity.
+
 # Because these code chunks involved a lot of copying and pasting,
 # I had to be very careful to change all the necessary parts.
 # I found it helpful to open the image files these code chunks
@@ -123,7 +147,8 @@ crimeag16 <- ggplot(b, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
   xlab("Type of Victim") +
   ylab("Count") +
   theme(legend.position = "none") +
-  theme_minimal()
+  theme_minimal() +
+  scale_y_continuous(labels = comma)
 
 png("crimeag16.png", width = 576, height = 576, res = 120)
 crimeag16
@@ -162,13 +187,16 @@ c <- read_csv(file = "cleaned-data/CrimeData-2017.csv", col_types = cols(
   OffenseCount = col_double()
 ))
 
+c$CrimeAgainst <- factor(c$CrimeAgainst,levels = c("Property", "Person", "Society"))
+
 crimeag17 <- ggplot(c, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
   geom_bar(show.legend = FALSE) +
   labs(title = "Distribution of Crimes per Victim Type in 2017") +
   xlab("Type of Victim") +
   ylab("Count") +
   theme(legend.position = "none") +
-  theme_minimal()
+  theme_minimal() +
+  scale_y_continuous(labels = comma)
 
 # It also took a bit of messing around in Shiny to get these
 # images to center properly. That code is in the app, however,
@@ -205,13 +233,16 @@ d <- read_csv(file = "cleaned-data/CrimeData-2018.csv", col_types = cols(
   OffenseCount = col_double()
 ))
 
+d$CrimeAgainst <- factor(d$CrimeAgainst,levels = c("Property", "Person", "Society"))
+
 crimeag18 <- ggplot(d, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
   geom_bar(show.legend = FALSE) +
   labs(title = "Distribution of Crimes per Victim Type in 2018") +
   xlab("Type of Victim") +
   ylab("Count") +
   theme(legend.position = "none") +
-  theme_minimal()
+  theme_minimal() +
+  scale_y_continuous(labels = comma)
 
 # Lots of copying and pasting!
 
@@ -249,6 +280,10 @@ e <- read_csv(file = "cleaned-data/CrimeData-2019.csv", col_types = cols(
   OffenseCount = col_double()
 ))
 
+# Don't forget to reorder the bars.
+
+e$CrimeAgainst <- factor(e$CrimeAgainst,levels = c("Property", "Person", "Society"))
+
 # I had to come back and hide all the legends in all the bar
 # charts in the Rmd.
 
@@ -261,7 +296,8 @@ crimeag19 <- ggplot(e, aes(x = CrimeAgainst, fill = CrimeAgainst)) +
   xlab("Type of Victim") +
   ylab("Count") +
   theme(legend.position = "none") +
-  theme_minimal()
+  theme_minimal() +
+  scale_y_continuous(labels = comma)
 
 png("crimeag19.png", width = 576, height = 576, res = 120)
 crimeag19
