@@ -14,3 +14,6 @@ I also made the "Crime Rate + Pop.xlsx" by hand. I did this by transferring data
 
 I then copied those cleaned files into the cleaned-data directories in the app and in the primary
 directory. See the prep.R for those commands.
+
+Once you have run the commands in the prep.R file right order and loaded in the data properly,
+you can go through the Rmd files and run those code chunks in the order they have been written to reproduce this project. It does not matter which order you reproduce the Rmd file in (i.e. it doesn't matter if you run the crmeagimg.Rmd code chunks first or the monthspread.Rmd code chunks first, but you must run them in order within those files).
