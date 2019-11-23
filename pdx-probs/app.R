@@ -332,11 +332,12 @@ ui <- fluidPage(
       br(),
       h4("About Me"),
       br(),
-      "I am a first-year graduate student in Harvard University's master's
-      program for Regional Studies: Russia, Eastern Europe, and Central Asia.
-      Prior to starting my graduate studies, I worked in criminal defense in
-      Portland, Oregon and haven taken an interest in how rapidly the city
-      has changed in recent years--and what that means for residents.",
+      "My name is Sophia Freuden. I am a first-year graduate student in Harvard
+      University's master's program for Regional Studies: Russia, Eastern
+      Europe, and Central Asia. Prior to starting my graduate studies, I worked
+      in criminal defense in Portland, Oregon and haven taken an interest in
+      how rapidly the city has changed in recent years--and what that means for
+      residents.",
       br(),
       br(),
       "You can follow me on Twitter",
