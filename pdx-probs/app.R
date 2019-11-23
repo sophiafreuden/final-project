@@ -72,6 +72,17 @@ ui <- fluidPage(
           "Victims in 2018",
           h3("Crime in 2018 by Victim Type"),
           br(),
+          "Get to know what's in this crime data. This interactive bar chart
+          displays the three victim types that the Portland Police use to
+          classify their cases. Within these victim types, you can see what
+          sorts of crimes belong to which victim types--and how many of these
+          types of crimes occurred in 2018.",
+          br(),
+          "As you can see, some crimes only occurred once in 2018, while others
+          occurred thousands of times.",
+          br(),
+          br(),
+          br(),
 
           # I chose to go with sidebarPanel below so I would have my
           # graph on one side and a description to its side.
@@ -244,12 +255,12 @@ ui <- fluidPage(
       h4("About the Data"),
       br(),
       "I am using yearly crime data files from the",
-      
+
       # It took a couple tries to get this hyperlink code right. I found
       # the base of the code from another project. The trick is to put
       # in the http://www. part of the url, otherwise the app tries
       # to find the file in a local directory.
-      
+
       a("Portland Police Bureau", href = "https://www.portlandoregon.gov/police/71978"),
       "as well as their",
       a("crime rate estimates", href = "https://www.portlandoregon.gov/police/article/739634"),
@@ -261,10 +272,10 @@ ui <- fluidPage(
       br(),
       br(),
       "Lastly, I am using unemployment rate data from the",
-      
+
       # I'm not really sure what to do about this ridiculously long hyperlink.
       # I tried breaking it up into chunks and it broke the link in the app.
-      
+
       a("U.S. Bureau of Labor Statistics", href = "https://data.bls.gov/timeseries/LAUMT413890000000003?amp%253bdata_tool=XGtable&output_view=data&include_graphs=truehttps://data.bls.gov/pdq/SurveyOutputServlet"),
       br(),
       br(),
@@ -388,7 +399,13 @@ server <- function(input, output) {
       ylab("Count") +
       labs(
         title = "Display of Offense Type by Victim Type",
-        caption = "Scaled on x axis."
+       
+        # I tried breaking the second line of the caption below
+        # here in Shiny, but if I did that, it made my graphic
+        # look weird.
+       
+        caption = "Scaled on x axis.
+                  Offense types with no color showing indicate a single instance of that offense type."
       ) +
       theme_minimal()
   })
