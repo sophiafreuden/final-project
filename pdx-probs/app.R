@@ -107,6 +107,12 @@ ui <- fluidPage(
           "Victim Distribution",
           h3("Distribution of Crimes per Victim Type from 2015 to 2019"),
           br(),
+          "While the numbers of crimes committed varies by year, the frequencies
+          of broad kinds of crimes committed relative to one another remain
+          fairly consistent across years. This gives a good sense of what
+          crime in Portland generally looks like, year after year.",
+          br(),
+          br(),
 
           # Vertical layout didn't seem to change anything? I won't delete
           # this for future reference, but perhaps there is something else
@@ -165,6 +171,12 @@ ui <- fluidPage(
           "Crime Rate Over Time",
           h3("Person and Property Crime Rates Over Time, Plus Predictions for 2019 through 2023"),
           br(),
+          "The Portland Police provide yearly crime rata data for two types of crimes:
+          person crimes and property crimes. I wanted to display how these rates have
+          changed in recent years. Because I saw an interesting linear trend in property
+          crimes, I made a prediction for what the rate will be in 2019 through 2023.",
+          br(),
+          br(),
 
           # Lots of copy and paste! I'm not joking.
 
@@ -181,6 +193,15 @@ ui <- fluidPage(
         tabPanel(
           "Crimes Per Month",
           h3("Number of Reported Crimes Per Month from 2015 to 2019"),
+          br(),
+          "I wanted to show that while there are broad consistencies year to
+          year in criminal activity in Portland, each year is distinct. One
+          thing I noticed while working in criminal defense is that some months
+          seemed extraordinarily busy or slow for seemingly no reason. These
+          graphs show how many crimes were reported per month in 2015 through
+          2019. As you can see, it's not consistent. December often has far fewer
+          crimes than other months.",
+          br(),
           br(),
           img(src = "plotmonths15.png", style = "display: block; margin-left: auto; margin-right: auto;"),
           br(),
@@ -202,6 +223,14 @@ ui <- fluidPage(
           "Population",
           h3("Population Growth Over Time and Predictions for 2019 through 2023"),
           br(),
+          "Perhaps one of the most impactful phenomenon to occur in Portland has
+          been how many people have moved to the city in recent years. Obviously
+          this rate includes not just people moving there, but babies being born as
+          well. Even so, you can see that Portland's population has been steadily
+          climbing. I made two versions of a graph of population over time so
+          you can see the population scaled (or not) on the y axis.",
+          br(),
+          br(),
           img(src = "popplot.png", style = "display: block; margin-left: auto; margin-right: auto;"),
           br(),
           br(),
@@ -217,6 +246,28 @@ ui <- fluidPage(
         ),
         tabPanel(
           "Unemployment",
+          br(),
+          "Perhaps one of the most suprising things I found when exploring
+          the data I had collected was the relationship between unemployment
+          and crime rates for different types of crime.",
+          br(),
+          br(),
+          "I had previously assumed there was likely a positive correlation
+          between unemployment and crime. This data shows that there is in
+          fact a negative relationship between unemployment and property crime
+          and no clear relatiobship between unemlpoyment and person crime.",
+          br(),
+          br(),
+          "I cannot conclude from this data that there is causation between
+          unemployment and property crime. There could be an intervening
+          variable that causes this; perhaps fewer property crimes get
+          reported when the economy is doing poorly. In any case, it's
+          an interesting relationsip.",
+          br(),
+          br(),
+          "Each of the dots in the scatter plots below represent a single year.",
+          br(),
+          br(),
           h3("Unemployment and Crime Rate Over Time"),
           br(),
           img(src = "unempplot.png", style = "display: block; margin-left: auto; margin-right: auto;"),
@@ -399,11 +450,11 @@ server <- function(input, output) {
       ylab("Count") +
       labs(
         title = "Display of Offense Type by Victim Type",
-       
+
         # I tried breaking the second line of the caption below
         # here in Shiny, but if I did that, it made my graphic
         # look weird.
-       
+
         caption = "Scaled on x axis.
                   Offense types with no color showing indicate a single instance of that offense type."
       ) +
