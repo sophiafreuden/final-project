@@ -351,7 +351,9 @@ ui <- fluidPage(
       h4("GitHub Repository"),
       br(),
       "You can find my public GitHub repo for this project",
-      a("here.", href = "https://github.com/sophiafreuden/pdx-probs")
+      a("here.", href = "https://github.com/sophiafreuden/pdx-probs"),
+      br(),
+      br()
     )
   )
 )
