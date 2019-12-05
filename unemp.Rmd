@@ -171,14 +171,31 @@ unemppropcrime <- ggplot(unempcrime, aes(x = Avg, y = PropertyCrimeRt)) +
 # will have to do.
 ```
 
-```{r}
+```{r creating a coefficents table for property crime and unemployment}
+# Georgie recommended that I include a coefficients table for
+# the relationship between property crime and unemployment,
+# given their interesting relationship.
+
 coef1 <- lm(formula = PropertyCrimeRt ~ Avg, data = unempcrime)
 
+# You will need the broom package for tidy()!
+
 table1 <- tidy(coef1)
+
+# ilearned in Exam 3 that using tidy() on an lm list
+# will make the intercept and slopes appear in a way
+# that Preceptor would only describe as aesthetically
+# offensive. I learned this handy subsetting trick
+# to rewrite individual cells in tibbles to make them
+# look how I want to.
 
 table1[1, 1] <- "Intercept"
 
 table1[2, 1] <- "Unemployment"
+
+# For similar reasons, I had to round the numerical
+# values in the table and then rename the column
+# titles in the actual gt object.
 
 table1 <- table1 %>%
   mutate(estimate = round(estimate, digits = 3)) %>%
@@ -191,7 +208,11 @@ table2 <- table1 %>%
   cols_label(term = "", estimate = "Estimate", std.error = "Standard Error", statistic = "Statistic", p.value = "P Value")
 ```
 
-```{r}
+```{r saving my gt table as an image, include=FALSE}
+# If I don't set include to FALSE, then the gt table will
+# render in the Rmd upon knitting due to gtsave() being
+# used the way it is here.
+
 # Running gtsave() for the first time prompted me to install the
 # package webshot. I did that and loaded it with library(). Then
 # I got a weird message about phantomjs. I ran the below code
@@ -276,9 +297,10 @@ file_copy(
 file_delete(path = "unempperscrime.png")
 ```
 
-```{r}
+```{r rendering objects for knit, fig.align="center"}
 unempplot
 unemppropcrime
+table2
 unempperscrime
 ```
 
