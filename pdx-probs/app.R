@@ -247,6 +247,8 @@ ui <- fluidPage(
         tabPanel(
           "Unemployment",
           br(),
+          h3("Unemployment and Crime Rate Over Time"),
+          br(),
           "Perhaps one of the most suprising things I found when exploring
           the data I had collected was the relationship between unemployment
           and crime rates for different types of crime.",
@@ -267,8 +269,6 @@ ui <- fluidPage(
           br(),
           "Each of the dots in the scatter plots below represent a single year.",
           br(),
-          br(),
-          h3("Unemployment and Crime Rate Over Time"),
           br(),
           img(src = "unempplot.png", style = "display: block; margin-left: auto; margin-right: auto;"),
           br(),

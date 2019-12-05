@@ -12,6 +12,7 @@ library(scales)
 library(readxl)
 library(broom)
 library(gt)
+library(webshot)
 library(tidyverse)
 ```
 
@@ -172,34 +173,56 @@ unemppropcrime <- ggplot(unempcrime, aes(x = Avg, y = PropertyCrimeRt)) +
 ```
 
 ```{r}
-# coef1 <- lm(formula = PropertyCrimeRt ~ Avg, data = unempcrime)
-# 
-# table1 <- tidy(coef1)
-# 
-# 
-# table2 <- table1 %>%
-#   gt() %>%
-#   tab_header("Coefficients: Property Crime Rate and Unemployment") %>%
-#   cols_label(term = "", estimate = "Estimate", std.error = "Standard Error", statistic = "Statistic", p.value = "P Value")
+coef1 <- lm(formula = PropertyCrimeRt ~ Avg, data = unempcrime)
+
+table1 <- tidy(coef1)
+
+table1[1, 1] <- "Intercept"
+
+table1[2, 1] <- "Unemployment"
+
+table1 <- table1 %>%
+  mutate(estimate = round(estimate, digits = 3)) %>%
+  mutate(std.error = round(std.error, digits = 3)) %>%
+  mutate(statistic = round(statistic, digits = 3))
+
+table2 <- table1 %>%
+  gt() %>%
+  tab_header("Coefficients: Property Crime Rate and Unemployment") %>%
+  cols_label(term = "", estimate = "Estimate", std.error = "Standard Error", statistic = "Statistic", p.value = "P Value")
 ```
 
 ```{r}
-# png("table2.png", width = 576, height = 576, res = 120)
-# table2
-# dev.off()
-# 
-# file_copy(
-#   path = "table2.png",
-#   new_path = "pdx-probs/www/table2.png",
-#   overwrite = TRUE
-# )
-# 
-# file_delete(path = "table2.png")
+# Running gtsave() for the first time prompted me to install the
+# package webshot. I did that and loaded it with library(). Then
+# I got a weird message about phantomjs. I ran the below code
+# (commented out) and gtsave() then worked like how it should.
 
-# Georgie recommended I add a coefficients table to my regression
-# to provide additional data. I'm having a hard time getting this
-# to work using gt() so I will need to spend more time on it to
-# make it functional.
+# webshot::install_phantomjs()
+
+# You may or may not need to run the above line of code. Try running
+# the line below by itself. If it returns an error that begins with
+# "PhantomJS not found..." then run the above line of code and
+# gtsave() should work.
+
+table2 %>% gtsave("table2.png")
+
+# I originally tried using the same method of saving my gt table as
+# a PNG that I used with all my ggplot objects. Apparently png()
+# doesn't work on gt objects. I googled how to save a gt table
+# as an image and found gtsave, which I believe I have used before
+# or seen used before in past problem sets.
+
+# I was then able to copy and delete the spare PNG file like normal
+# using fs.
+
+file_copy(
+  path = "table2.png",
+  new_path = "pdx-probs/www/table2.png",
+  overwrite = TRUE
+)
+
+file_delete(path = "table2.png")
 ```
 
 
