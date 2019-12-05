@@ -276,6 +276,9 @@ ui <- fluidPage(
           img(src = "unemppropcrime.png", style = "display: block; margin-left: auto; margin-right: auto;"),
           br(),
           br(),
+          img(src = "table2.png", style = "display: block; margin-left: auto; margin-right: auto;"),
+          br(),
+          br(),
           img(src = "unempperscrime.png", style = "display: block; margin-left: auto; margin-right: auto;"),
 
           # Don't forget the .png suffices here or your images won't
