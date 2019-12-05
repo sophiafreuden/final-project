@@ -330,7 +330,7 @@ ui <- fluidPage(
       # I'm not really sure what to do about this ridiculously long hyperlink.
       # I tried breaking it up into chunks and it broke the link in the app.
 
-      a("U.S. Bureau of Labor Statistics", href = "https://data.bls.gov/timeseries/LAUMT413890000000003?amp%253bdata_tool=XGtable&output_view=data&include_graphs=truehttps://data.bls.gov/pdq/SurveyOutputServlet"),
+      a("U.S. Bureau of Labor Statistics.", href = "https://data.bls.gov/timeseries/LAUMT413890000000003?amp%253bdata_tool=XGtable&output_view=data&include_graphs=truehttps://data.bls.gov/pdq/SurveyOutputServlet"),
       br(),
       br(),
       h4("About Me"),
