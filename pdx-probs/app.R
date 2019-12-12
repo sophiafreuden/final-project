@@ -7,6 +7,7 @@ library(shiny)
 library(readxl)
 library(scales)
 library(lubridate)
+library(vembedr)
 library(tidyverse)
 
 # I'm not sure if there's a standard place to load in data,
@@ -304,6 +305,10 @@ ui <- fluidPage(
       avoided due to concerns about safety are now the trendiest shopping and dining districts
       in the city. I hope to better understand how changes in the economy and composition
       of the city may have impacted what kinds of crimes are commited and at what rates.",
+      br(),
+      br(),
+      embed_url("https://youtu.be/Ci3je2WeC-s") %>%
+        div(align = "center"),
       br(),
       br(),
       h4("About the Data"),
