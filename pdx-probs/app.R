@@ -279,6 +279,13 @@ ui <- fluidPage(
           br(),
           img(src = "table2.png", style = "display: block; margin-left: auto; margin-right: auto;"),
           br(),
+          "This table displays the coefficients for the linear model I plotted
+          that explores the relationship between unemployment and property
+          crime. It displays the Unemmployment coefficent as a slope of -0.935,
+          meaning that for every percentage point increase in Unemployment, we
+          should expect a decrease in property crime rate of 0.935. This table
+          also shows the standard error, T statistic, and P value for my linear
+          regression.",
           br(),
           img(src = "unempperscrime.png", style = "display: block; margin-left: auto; margin-right: auto;"),
 
